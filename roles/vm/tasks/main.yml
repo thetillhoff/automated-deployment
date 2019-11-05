@@ -1,13 +1,13 @@
 - name: get gnome power settings
-  become: true
-  become_method: sudo
+#  become: true
+#  become_method: sudo
   shell: gsettings get org.gnome.settings-daemon.plugins.power active
   register: r_gnome_power
   changed_when: no
 - set_fact:
     r_gnome_power_active: "{{ r_gnome_power.stdout }}"
 - name: set gnome power settings
-  become: true
-  become_method: sudo
+#  become: true
+#  become_method: sudo
   shell: gsettings set org.gnome.settings-daemon.plugins.power active false
   when: r_gnome_power_active != "false"
