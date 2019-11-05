@@ -22,6 +22,7 @@
     - common
     - dev
     - docker
-    - extended
     - minikube
     - vm
+    - custom
+    - extended
