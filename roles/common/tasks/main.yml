@@ -3,12 +3,13 @@
 - debug:
     msg: "The user is {{ user }}"
 
-- name: update apt
+- name: update apt and update existing packages
   become: true
   become_method: sudo
   apt:
     update_cache: yes
     cache_valid_time: 86400 #One day
+    upgrade: full
 - name: install snapd
   become: true
   become_method: sudo
@@ -56,11 +57,10 @@
       - quadrapassel
       - tali
 
-- name: uninstall old dependencies and update existing ones
+- name: uninstall old dependencies
   become: true
   become_method: sudo
   apt:
-    upgrade: dist
     autoremove: yes
 
 - include_tasks: subtasks/subtask_add_path.yml
