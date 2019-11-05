@@ -1,0 +1,27 @@
+- hosts: 127.0.0.1
+  connection: local
+  run_once: true
+  #become: true
+  #become_method: sudo
+  vars:
+#    somevar: example
+#    user: dev
+    user: "{{ lookup('env','USER') }}"
+    homedir: "{{ lookup('env','HOME') }}"
+    git_name: "Till Hoffmann"
+    git_mail: "till.hoffmann@enforge.de"
+
+# prerequisites
+#    - installed ansible
+#    - internet connection (running tproxy)
+#    - sudo installed
+#    - user dev in suders list (remove task "append 'sudo' to groups the user ...")
+#    - gnome installed
+
+  roles:
+    - common
+    - dev
+    - docker
+    - extended
+    - minikube
+    - vm

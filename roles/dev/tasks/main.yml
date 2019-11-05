@@ -1,0 +1,55 @@
+- name: install vscode
+  become: true
+  become_method: sudo
+  snap:
+    name: vscode
+    classic: yes
+
+- name: install git
+  become: true
+  become_method: sudo
+  apt:
+    name:
+      - git
+- name: configure git global values
+  block:
+    - git_config:
+        name: user.name
+        scope: global
+        value: "{{ git_name }}"
+    - git_config:
+        name: user.email
+        scope: global
+        value: "{{ git_mail }}"
+
+- name: install gitcola
+  become: true
+  become_method: sudo
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400 #One day
+    name:
+      - git-cola
+
+- name: install pip
+  become: true
+  become_method: sudo
+  apt:
+    name: python-pip
+
+- name: check if go is installed
+  stat:
+    path: /usr/local/go/bin
+  register: go_result
+- name: install golang
+  become: true
+  become_method: sudo
+  shell: curl -L https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz -o ./go.tar.gz && sudo tar -C /usr/local -xzf ./go.tar.gz && rm ./go.tar.gz
+  when: go_result.stat.exists == false
+
+- include_tasks: subtasks/subtask_add_path.yml
+  vars:
+    extra_path: "{{ item }}"
+  with_items:
+    - /snap/bin
+    - /usr/local/go/bin

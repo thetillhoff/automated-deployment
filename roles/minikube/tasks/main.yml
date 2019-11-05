@@ -1,0 +1,68 @@
+- name: install kvm
+  become: true
+  become_method: sudo
+  apt:
+    name:
+      - qemu-kvm
+      - libvirt-clients
+      - libvirt-daemon-system
+      - virt-manager
+- name: append 'libvirt' and 'libvirt-qemu' to groups the user '{{ user }}' is in
+  become: true
+  become_method: sudo
+  user:
+    name: "{{ user }}"
+    groups: libvirt,libvirt-qemu
+    append: yes
+- name: install minikube
+  become: true
+  become_method: sudo
+  apt:
+    deb: https://storage.googleapis.com/minikube/releases/latest/minikube_1.3.1.deb
+- name: check if docker-machine-driver is installed
+  stat:
+    path: /usr/local/bin/docker-machine-driver-kvm2
+  register: docker_machine_driver_result
+- name: install docker-machine-driver for minikube
+  become: true
+  become_method: sudo
+  shell: curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 && install docker-machine-driver-kvm2 /usr/local/bin/
+  args:
+    warn: false
+  when: docker_machine_driver_result.stat.exists == false
+#- name: disable apparmor for libvirtd
+#  file: src=/etc/apparmor.d/usr.sbin.libvirtd dest=/etc/apparmor.d/disable/usr.sbin.libvirtd state=link
+#  diabled, as this must be run on every startup
+#    - name: start minikube
+#      shell: minikube start --vm-driver=kvm2
+- debug:
+    msg: Please run minikube start --vm-driver=kvm2 at least once
+- name: check if kubectl is installed
+  stat:
+    path: /usr/local/bin/kubectl
+  register: kubectl_result
+- name: install kubectl
+  become: true
+  become_method: sudo
+  shell: curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+  args:
+    warn: false
+  when: kubectl_result.stat.exists == false
+- name: check if helm is installed
+  stat:
+    path: /usr/local/bin/helm
+  register: helm_result
+- name: install helm
+  become: true
+  become_method: sudo
+  shell: curl -L https://git.io/get_helm.sh | bash
+  args:
+    warn: false
+  when: helm_result.stat.exists == false
+
+# - debug:
+#     msg: "Please restart the host now. (Due to disabling apparmor for libvirt.)"
+# - name: disable apparmor
+#   become: true
+#   become_method: sudo
+#   shell: systemctl stop apparmor && systemctl disable apparmor

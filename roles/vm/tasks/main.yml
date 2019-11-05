@@ -1,0 +1,11 @@
+- name: get gnome power settings
+  become: true
+  become_method: sudo
+  shell: gsettings get org.gnome.settings-daemon.plugins.power
+  register: gnome_power
+#- debug: var=gnome_power
+- name: set gnome power settings
+  become: true
+  become_method: sudo
+  shell: gsettings org.gnome.settings-daemon.plugins.power active false
+  when: gnome_power != "false"
