@@ -3,7 +3,8 @@
   become_method: sudo
   shell: gsettings get org.gnome.settings-daemon.plugins.power active
   register: gnome_power
-#- debug: var=gnome_power
+  changed_when: no
+- debug: var=gnome_power
 - name: set gnome power settings
   become: true
   become_method: sudo
