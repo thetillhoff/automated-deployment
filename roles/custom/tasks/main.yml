@@ -10,7 +10,7 @@
 
 - name: get gnome animation setting
   shell: gsettings get org.gnome.desktop.interface enable-animations
-  register: r_gnome_theme
+  register: r_gnome_animation
   changed_when: no
 - set_fact:
     gnome_animation: "{{ r_gnome_animation.stdout }}"
