@@ -1,0 +1,12 @@
+# https://coderwall.com/p/ynvi0q/updating-path-with-ansible-system-wide
+- name: add {{ extra_path }} to path
+  become: true
+  become_method: sudo
+  vars:
+    extra_path: "{{ extra_path }}"
+  lineinfile:
+    dest=/etc/environment
+    state=present
+    backrefs=yes
+    regexp='PATH=(["]*)((?!.*?{{ extra_path }}).*?)(["]*)$'
+    line="PATH=\1\2:{{ extra_path }}\3"
