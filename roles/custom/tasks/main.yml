@@ -1,0 +1,8 @@
+- name: fix favorites of gnome bar
+  include_tasks: subtasks/subtask_gnome_favorites
+  vars:
+    - ubiquity.desktop # what is this?
+    - org.gnome.Terminal.desktop
+    - org.gnome.Nautilus.desktop
+#    - vscode
+#    - firefox.desktop
