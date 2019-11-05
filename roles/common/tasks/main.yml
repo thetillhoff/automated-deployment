@@ -56,10 +56,11 @@
       - quadrapassel
       - tali
 
-- name: uninstall old dependencies
+- name: uninstall old dependencies and update existing ones
   become: true
   become_method: sudo
   apt:
+    upgrade: dist
     autoremove: yes
 
 - include_tasks: subtasks/subtask_add_path.yml
