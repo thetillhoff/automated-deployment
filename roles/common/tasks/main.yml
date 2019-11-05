@@ -92,30 +92,6 @@
     - "/usr/games"
     - "/usr/local/games"
 
-- name: get gnome theme
-  become: true
-  become_method: sudo
-  shell: gsettings get org.gnome.desktop.interface gtk-theme
-  register: gnome_theme
-- debug: var=gnome_theme
-- name: set gnome theme
-  become: true
-  become_method: sudo
-  shell: gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-  when: gnome_theme != "Adwaita-dark"
-
-- name: get gnome animation setting
-  become: true
-  become_method: sudo
-  shell: gsettings get org.gnome.desktop.interface enable-animations
-  register: gnome_theme
-- debug: var=gnome_theme
-- name: set gnome animation setting
-  become: true
-  become_method: sudo
-  shell: gsettings set org.gnome.desktop.interface enable-animations false
-  when: gnome_theme == true
-
 - name: install dependencies for extensions
   become: true
   become_method: sudo

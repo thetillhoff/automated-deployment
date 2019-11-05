@@ -1,8 +1,28 @@
-- name: fix favorites of gnome bar
-  include_tasks: subtasks/subtask_gnome_favorites
-  vars:
-    - ubiquity.desktop # what is this?
-    - org.gnome.Terminal.desktop
-    - org.gnome.Nautilus.desktop
-#    - vscode
-#    - firefox.desktop
+- name: get gnome theme
+  shell: gsettings get org.gnome.desktop.interface gtk-theme
+  register: r_gnome_theme
+  changed_when: no
+- set_fact:
+    gnome_theme: "{{ r_gnome_theme.stdout }}"
+- name: set gnome theme
+  shell: gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+  when: gnome_theme != "Adwaita-dark"
+
+- name: get gnome animation setting
+  shell: gsettings get org.gnome.desktop.interface enable-animations
+  register: r_gnome_theme
+  changed_when: no
+- set_fact:
+    gnome_animation: "{{ r_gnome_animation.stdout }}"
+- name: set gnome animation setting
+  shell: gsettings set org.gnome.desktop.interface enable-animations false
+  when: gnome_animation == true
+
+#- name: fix favorites of gnome bar
+#  include_tasks: subtasks/subtask_gnome_favorites
+#  vars:
+#    - ubiquity.desktop # what is this?
+#    - org.gnome.Terminal.desktop
+#    - org.gnome.Nautilus.desktop
+##    - vscode
+##    - firefox.desktop
