@@ -9,6 +9,5 @@
 - name: set gnome power settings
   become: true
   become_method: sudo
-  shell: gsettings org.gnome.settings-daemon.plugins.power active false
+  shell: gsettings set org.gnome.settings-daemon.plugins.power active false
   when: r_gnome_power_active != "false"
-  
