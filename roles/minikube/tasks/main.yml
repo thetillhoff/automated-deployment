@@ -26,7 +26,7 @@
 - name: install docker-machine-driver for minikube
   become: true
   become_method: sudo
-  shell: curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 && install docker-machine-driver-kvm2 /usr/local/bin/
+  shell: curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 && install docker-machine-driver-kvm2 /usr/local/bin/ && rm docker-machine-driver-kvm2
   args:
     warn: false
   when: docker_machine_driver_result.stat.exists == false
