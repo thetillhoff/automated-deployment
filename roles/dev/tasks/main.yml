@@ -4,6 +4,14 @@
   snap:
     name: vscode
     classic: yes
+- include_tasks: subtasks/subtask_vscode_extension.yml
+  vars:
+    extension: "{{ item }}"
+  with_items:
+    - ms-azuretools.vscode-docker
+    - ms-python.python
+    - ms-vscode.Go
+    - tomoki1207.pdf
 
 - name: install git
   become: true

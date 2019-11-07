@@ -1,0 +1,12 @@
+- name: get list of installed vscode extensions
+  shell: code --list-extensions
+  register: r_vscode_extension
+  changed_when: no
+
+- debug:
+    msg: "{{ r_vscode_extension.stdout }}"
+- name: install vscode extension {{ extension }}
+  vars:
+    extension: "{{ extension }}"
+  shell: code --install-extension {{ extension }}
+  when: r_vscode_extension.stdout.find(extension) == -1
