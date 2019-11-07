@@ -25,4 +25,4 @@
     - minikube
     - vm
     - custom
-    - extended
+#    - extended
