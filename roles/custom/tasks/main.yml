@@ -6,7 +6,7 @@
     gnome_theme: "{{ r_gnome_theme.stdout }}"
 - name: set gnome theme
   shell: gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-  when: gnome_theme != "Adwaita-dark"
+  when: gnome_theme != "'Adwaita-dark'"
 
 - name: get gnome animation setting
   shell: gsettings get org.gnome.desktop.interface enable-animations
@@ -18,11 +18,14 @@
   shell: gsettings set org.gnome.desktop.interface enable-animations false
   when: gnome_animation == true
 
-#- name: fix favorites of gnome bar
-#  include_tasks: subtasks/subtask_gnome_favorites
-#  vars:
-#    - ubiquity.desktop # what is this?
-#    - org.gnome.Terminal.desktop
-#    - org.gnome.Nautilus.desktop
-##    - vscode
-##    - firefox.desktop
+- name: check favorites of gnome bar
+  shell: dconf read /org/gnome/shell/favorite-apps
+  register: r_gnome_favorites
+  changed_when: no
+- set_fact:
+    gnome_favorites: "{{ r_gnome_favorites.stdout | string }}"
+- set_fact:
+    gnome_wanted_favorites: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'code.desktop', 'firefox.desktop', 'git-cola.desktop']"
+- name: set favorites of gnome bar
+  shell: dconf write /org/gnome/shell/favorite-apps "{{ gnome_wanted_favorites }}"
+  when: gnome_favorites != gnome_wanted_favorites
