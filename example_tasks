@@ -49,3 +49,48 @@ tasks:
       state: absent
 
 ---
+
+- name: install cifs-utils for mounting cifs shares
+  become: true
+  become_method: sudo
+  apt:
+    name: cifs-utils
+- name: mount cifs shares (Downloads)
+  become: true
+  become_method: sudo
+  mount:
+    path: /mnt/Downloads
+    src: //someserver/somefolder
+    fstype: cifs
+    opts: "auto,rw,uid=dev,gid=dev,file_mode=0644,dir_mode=0755,credentials=/home/{{ user }}/.smbcredentials"
+    state: present
+- name: mount cifs shares (workspace)
+  become: true
+  become_method: sudo
+  mount:
+    path: /mnt/workspace
+    src: //someserver/somefolder
+    fstype: cifs
+    opts: "auto,rw,uid=dev,gid=dev,file_mode=0744,dir_mode=0755,credentials=/home/{{ user }}/.smbcredentials"
+    state: present
+- name: mount cifs shares (.ssh)
+  become: true
+  become_method: sudo
+  mount:
+    path: /mnt/.ssh
+    src: //someserver/.ssh
+    fstype: cifs
+    opts: "auto,ro,uid=dev,gid=dev,file_mode=0600,dir_mode=0755,credentials=/home/{{ user }}/.smbcredentials"
+    state: present
+
+- name: delete folders if they exist and create symlinks to mounts
+  include_tasks: subtasks/subtask_symlink.yml
+  vars:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: "/mnt/Downloads", dest: "/home/{{ user }}/Downloads"}
+    - { src: "/mnt/workspace", dest: "/home/{{ user }}/workspace"}
+    - { src: "/mnt/.ssh", dest: "home/{{ user }}/.ssh"}
+
+...
