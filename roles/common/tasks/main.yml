@@ -106,8 +106,6 @@
       - 39 #Put-Windows
       - 104 #NetSpeed
       - 120 #System-Monitor
-- debug:
-    msg: "You need to restart gnome-shell. You can do this either with alt+F2 and r or with killall -HUP gnome-shell"
 
 
 # - name: Check if my_package is installed

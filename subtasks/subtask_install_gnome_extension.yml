@@ -1,9 +1,13 @@
 - name: Check if Gnome Shell extension is already installed - {{ gnome_extension_info.name }}
+  become: true
+  become_user: "{{ user }}"
   stat:
     path: "{{ ansible_user_dir }}/.local/share/gnome-shell/extensions/{{ gnome_extension_info.uuid }}"
   register: r_gnome_extensions_check_existing
 
 - name: Create temporary download directory
+  become: true
+  become_user: "{{ user }}"
   tempfile:
     state: directory
     suffix: ".gnome_extension_download"
@@ -13,12 +17,16 @@
 
 - block:
     - name: Download Gnome Shell extension - {{ gnome_extension_info.name }}
+      become: true
+      become_user: "{{ user }}"
       get_url:
         url: https://extensions.gnome.org{{ gnome_extension_info.download_url }}
         dest: "{{ r_gnome_extension_download_dir.path }}/{{ gnome_extension_info.uuid }}.zip"
       register: r_gnome_extension_download
 
     - name: Create install directory - {{ gnome_extension_info.name }}
+      become: true
+      become_user: "{{ user }}"
       file:
         path: "{{ ansible_user_dir }}/.local/share/gnome-shell/extensions/{{ gnome_extension_info.uuid }}"
         state: directory
@@ -27,14 +35,23 @@
         mode: 0775
 
     - name: Install Gnome Shell extension - {{ gnome_extension_info.name }}
+      become: true
+      become_user: "{{ user }}"
       unarchive:
         src: "{{ r_gnome_extension_download.dest }}"
         dest: "{{ ansible_user_dir }}/.local/share/gnome-shell/extensions/{{ gnome_extension_info.uuid }}"
 
     - name: Enable Gnome Shell extension - {{ gnome_extension_info.name }}
+      become: true
+      become_user: "{{ user }}"
       command: gnome-shell-extension-tool --enable-extension {{ gnome_extension_info.uuid }}
+
+    - debug:
+        msg: "You need to restart gnome-shell. You can do this either with alt+F2 and r or with killall -HUP gnome-shell"
   always:
     - name: Delete temporary download directory
+      become: true
+      become_user: "{{ user }}"
       file:
         path: "{{ r_gnome_extension_download_dir.path }}"
         state: absent

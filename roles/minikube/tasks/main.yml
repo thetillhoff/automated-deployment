@@ -38,6 +38,8 @@
 - debug:
     msg: Please run minikube start --vm-driver=kvm2 at least once
 - name: check if kubectl is installed
+  become: true
+  become_method: sudo
   stat:
     path: /usr/local/bin/kubectl
   register: kubectl_result
@@ -49,6 +51,8 @@
     warn: false
   when: kubectl_result.stat.exists == false
 - name: check if helm is installed
+  become: true
+  become_method: sudo
   stat:
     path: /usr/local/bin/helm
   register: helm_result

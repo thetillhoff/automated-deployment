@@ -1,11 +1,13 @@
 - name: get list of installed vscode extensions
+  become: true
+  become_user: "{{ user }}"
   shell: code --list-extensions
   register: r_vscode_extension
   changed_when: no
 
-- debug:
-    msg: "{{ r_vscode_extension.stdout }}"
 - name: install vscode extension {{ extension }}
+  become: true
+  become_user: "{{ user }}"
   vars:
     extension: "{{ extension }}"
   shell: code --install-extension {{ extension }}

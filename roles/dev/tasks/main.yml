@@ -20,6 +20,8 @@
     name:
       - git
 - name: configure git global values
+  become: true
+  become_user: "{{ user }}"
   block:
     - git_config:
         name: user.name
