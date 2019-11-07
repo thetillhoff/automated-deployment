@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ansible-playbook multi_file.yml --ask-become-pass
+ansible-playbook ubuntu_1804_hyperv_quickcreate.yml --ask-become-pass
