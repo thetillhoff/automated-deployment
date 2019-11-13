@@ -36,8 +36,6 @@
   become: true
   become_method: sudo
   apt:
-    update_cache: yes
-    cache_valid_time: 86400 #One day
     name:
       - git-cola
 
@@ -56,6 +54,17 @@
   become_method: sudo
   shell: curl -L https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz -o ./go.tar.gz && sudo tar -C /usr/local -xzf ./go.tar.gz && rm ./go.tar.gz
   when: go_result.stat.exists == false
+
+- name: check if go-task is installed
+  stat:
+    path: /usr/local/bin/task
+  register: gotask_result
+- name: install go-task
+  become: true
+  become_method: sudo
+  shell: curl -L https://github.com/go-task/task/releases/download/v2.7.1/task_linux_amd64.deb -o ./go-task.deb && sudo dpkg -i ./go-task.deb && sudo rm ./go-task.deb
+  when: gotask_result.stat.exists == false
+  #task is added to /usr/local/bin/ and is thus automatically added to path
 
 - include_tasks: subtasks/subtask_add_path.yml
   vars:
