@@ -1,0 +1,36 @@
+- name: install vscode
+  win_chocolatey:
+    name: vscode
+    state: present
+- include_tasks: subtasks/subtask_vscode_extension.yml
+  vars:
+    extension: "{{ item }}"
+  with_items:
+    - ms-azuretools.vscode-docker
+    - ms-python.python
+    - ms-vscode.Go
+    - tomoki1207.pdf
+
+- name: install git
+  win_chocolatey:
+    name: git
+    state: present
+
+
+- name: install fork
+  win_chocolatey:
+    name: git-fork
+    state: present
+
+- name: install python with pip
+  win_chocolatey:
+    name: python
+    state: present
+
+- name: install golang
+  win_chocolatey:
+    name: golang
+    state: present
+
+- name: install go-task
+  win_shell: scoop bucket add extras; scoop install task
