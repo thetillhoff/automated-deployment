@@ -5,4 +5,7 @@ Next run the run.sh file as a normal user.
 
 # installation on windows
 
-Start Powershell as admin and run windows_10.ps1
+Start Powershell as admin and run
+  Set-ExecutionPolicy Bypass -Scope Process -Force;
+  ./windows_10.ps1
+  
