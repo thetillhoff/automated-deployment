@@ -17,7 +17,7 @@
   roles:
     - w_common
     - w_dev
-#    - w_docker
+    - w_docker
 #    - w_minikube
 #    - w_vm
 #    - w_custom
