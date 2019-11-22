@@ -1,0 +1,4 @@
+- name: Install Docker for Windows
+  win_chocolatey:
+    name: choco install docker-desktop
+    state: present
