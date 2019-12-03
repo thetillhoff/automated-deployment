@@ -30,5 +30,14 @@ rm -recurse -force %appdata%/Microsoft/Windows/Recent/*
 # restart explorer afterwards
 taskkill /IM explorer.exe /F; explorer.exe
 
+# switch to darkmode
+Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'AppsUseLightTheme' -Value 0
+# disable transparency
+Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'EnableTransparency' -Value 0
+## set accent color on start, taskbar and action center
+#Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'ColorPrevalence' -Value 1
+## set accent color on title bars
+#Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\DWM' -Name 'ColorPrevalence' -Value 1
+
 # remove everything from desktop
 rm $HOME\Desktop\*
