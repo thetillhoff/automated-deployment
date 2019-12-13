@@ -12,7 +12,10 @@
     - ms-python.python
     - ms-vscode.Go
     - tomoki1207.pdf
-
+- name: configure vscode
+  # to fix the problem with altgr behaving as left-arrow for example
+  shell: 'echo -e ''{\n  "git.autofetch": true,\n  "keyboard.dispatch": "keyCode"\n}'' > ~/.config/Code/User/settings.json'
+  #///TODO improve this maybe?
 - name: install git
   become: true
   become_method: sudo
