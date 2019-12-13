@@ -10,6 +10,7 @@
     homedir: "{{ lookup('env','HOME') }}"
     git_name: "Till Hoffmann"
     git_mail: "till.hoffmann@enforge.de"
+    nodejs_version: node_12.x
 
 # prerequisites
 #    - installed ansible

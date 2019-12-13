@@ -75,3 +75,25 @@
   with_items:
     - /snap/bin
     - /usr/local/go/bin
+
+#///TODO add checkups (do only once) for nodejs
+- name: add nodejs repo-key
+  become: true
+  become_method: sudo
+  shell: curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+- name: add nodejs repo to sources.list
+  become: true
+  become_method: sudo
+  shell: echo "deb https://deb.nodesource.com/{{ nodejs_version }} $(lsb_release -s -c) main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+- name: add nodejs src-repo to sources.list
+  become: true
+  become_method: sudo
+  shell: echo "deb-src https://deb.nodesource.com/{{ nodejs_version }} $(lsb_release -s -c) main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+- name: install nodejs
+  become: true
+  become_method: sudo
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400 #One day
+    name:
+      - nodejs
