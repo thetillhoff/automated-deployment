@@ -2,7 +2,7 @@
   become: true
   become_method: sudo
   snap:
-    name: vscode
+    name: code
     classic: yes
 - include_tasks: subtasks/subtask_vscode_extension.yml
   vars:
