@@ -42,7 +42,7 @@ Make sure to close and reopen the vmconnect window. Start the machine now.
 When logged in, configure the proper drive mapping:
 - create the required /mnt/* folders
 - insert the required lines to /etc/fstab for example:
-  - \\cifs-serverdnsorip\HOFTILL$\Data\workspace /mnt/workspace cifs auto,rw,uid=dev,gid=dev,file_mode=0644,dir_mode=0755,credentials=/home/dev/.smbcredentials 0 0
+  - \\cifs-serverdnsorip\HOFTILL$\Data\workspace /mnt/workspace cifs auto,rw,uid=dev,gid=dev,file_mode=0744,dir_mode=0755,credentials=/home/dev/.smbcredentials 0 0
   - \\cifs-serverdnsorip\HOFTILL$\Data\Downloads /mnt/Downloads cifs auto,rw,uid=dev,gid=dev,file_mode=0644,dir_mode=0755,credentials=/home/dev/.smbcredentials 0 0
   - \\cifs-serverdnsorip\HOFTILL$\Data\.ssh /mnt/.ssh cifs auto,ro,uid=dev,gid=dev,file_mode=0400,dir_mode=0744,credentials=/home/dev/.smbcredentials 0 0
 - make sure to create the /home/dev/.smbcredentials referenced in the lines exists and contains the credentials in the following way:
