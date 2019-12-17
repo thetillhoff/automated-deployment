@@ -11,6 +11,12 @@
     git_name: "Till Hoffmann"
     git_mail: "till.hoffmann@enforge.de"
     nodejs_version: node_12.x
+    gnome_favorites:
+        - org.gnome.Terminal.desktop
+        - org.gnome.Nautilus.desktop
+        - firefox.desktop
+        - code.desktop
+        - git-cola.desktop
 
 # prerequisites
 #    - installed ansible
@@ -20,10 +26,11 @@
 #    - gnome installed
 
   roles:
-    - l_common
-    - l_dev
-    - l_docker
-    - l_minikube
-    - l_vm
-    - l_custom
+    #- l_common
+    #- l_dev
+    #- l_docker
+    #- l_minikube
+    #- l_vm
+    #- l_custom
 #    - l_extended
+    - test

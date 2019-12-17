@@ -1,0 +1,27 @@
+- set_fact:
+    wanted_gnome_favorites: |-
+        {{ gnome_favorites | join("', '") }}
+- set_fact:
+    single_quote : |-
+        '
+- set_fact:
+    wanted_gnome_favorites: |-
+        {{ single_quote }}{{ wanted_gnome_favorites }}{{ single_quote }}
+#- copy: "content={{ wanted_gnome_favorites }} dest=/home/dev/workspace/automated_deployment/test2.json"
+- name: check current favorites of gnome bar
+  become: true
+  become_user: "{{ user }}"
+  shell: dconf read /org/gnome/shell/favorite-apps
+  register: r_current_gnome_favorites
+  changed_when: no
+- set_fact:
+    current_gnome_favorites: "{{ r_current_gnome_favorites.stdout | string }}"
+- name: set favorites of gnome bar
+  become: true
+  become_user: "{{ user }}"
+  #shell: "echo [{{ wanted_gnome_favorites }}] > test.txt"
+  shell: "dconf write /org/gnome/shell/favorite-apps \"[{{ wanted_gnome_favorites }}]\""
+  when: current_gnome_favorites != wanted_gnome_favorites
+
+- copy: "content={{ wanted_gnome_favorites }} dest=/home/dev/workspace/automated_deployment/test_wanted.json"
+- copy: "content={{ current_gnome_favorites }} dest=/home/dev/workspace/automated_deployment/test_current.json"
