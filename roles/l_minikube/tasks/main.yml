@@ -50,19 +50,7 @@
   args:
     warn: false
   when: kubectl_result.stat.exists == false
-- name: check if helm is installed
-  become: true
-  become_method: sudo
-  stat:
-    path: /usr/local/bin/helm
-  register: helm_result
-- name: install helm
-  become: true
-  become_method: sudo
-  shell: curl -L https://git.io/get_helm.sh | bash
-  args:
-    warn: false
-  when: helm_result.stat.exists == false
+
 
 # - debug:
 #     msg: "Please restart the host now. (Due to disabling apparmor for libvirt.)"
