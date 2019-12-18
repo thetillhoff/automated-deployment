@@ -1,6 +1,7 @@
 # Linux OS installation
 You can install ubuntu in server mode and install GUI-components afterwards. This deployment expects you to use a fully feature Gnome installation.
 If you are behind proxy you should tell the installer about it and load all updates beforehand.
+If this is a virtual machine, on Hyper-V run the following command: ```Set-VMProcessor -VMName <VMName> -ExposeVirtualizationExtensions $true```
 
 # GUI installation
 If you only install ubuntu in server mode you can now install missing GUI components.
