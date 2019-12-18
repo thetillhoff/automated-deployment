@@ -35,7 +35,7 @@
 - set_fact:
     gnome_favorites: "{{ r_gnome_favorites.stdout | string }}"
 - set_fact:
-    gnome_wanted_favorites: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'code.desktop', 'firefox.desktop', 'git-cola.desktop']"
+    gnome_wanted_favorites: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'code.desktop', 'git-cola.desktop', 'evince.desktop']"
 - name: set favorites of gnome bar
   become: true
   become_user: "{{ user }}"
