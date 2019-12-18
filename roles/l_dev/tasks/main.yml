@@ -15,7 +15,7 @@
 - name: configure vscode
   # to fix the problem with altgr behaving as left-arrow for example
   # no spaces after colons make it a valid yaml-string
-  shell: echo '{\n  "git.autofetch":true,\n  "keyboard.dispatch":"keyCode"\n}' > ~/.config/Code/User/settings.json
+  shell: echo '{\n  "git.autofetch":true,\n  "keyboard.dispatch":"keyCode",\n  "workbench.startupEditor":"newUntitledFile",\n  "editor.wordWrap":"on"\n}' > ~/.config/Code/User/settings.json
 - name: install git
   become: true
   become_method: sudo
