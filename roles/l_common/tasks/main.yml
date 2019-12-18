@@ -108,6 +108,12 @@
       - 104 #NetSpeed
       - 120 #System-Monitor
 
+- name: install pdf reader
+  become: true
+  become_method: sudo
+  apt:
+    name:
+      - evince #for pdfs
 
 # - name: Check if my_package is installed
 #   command: dpkg-query -W my_package
