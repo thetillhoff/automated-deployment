@@ -41,3 +41,22 @@
   become_user: "{{ user }}"
   shell: dconf write /org/gnome/shell/favorite-apps "{{ gnome_wanted_favorites }}"
   when: gnome_favorites != gnome_wanted_favorites
+
+#///TODO add checkups (do only once) for enpass
+- name: add enpass to sources.list
+  become: true
+  become_method: sudo
+  shell: echo "deb https://apt.enpass.io/ stable main" > /etc/apt/sources.list.d/enpass.list
+- name: add enpass repo key
+  become: true
+  become_method: sudo
+  shell: wget -O - https://apt.enpass.io/keys/enpass-linux.key | apt-key add -
+- name: install enpass
+  become: true
+  become_method: sudo
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400 #One day
+    name:
+      - enpass
+  
