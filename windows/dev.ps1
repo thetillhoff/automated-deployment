@@ -21,3 +21,6 @@ choco install -y go
 
 # install go-task
 scoop bucket add extras; scoop install task
+
+# install go-hugo
+scoop install hugo
