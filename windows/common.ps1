@@ -24,3 +24,6 @@ Get-AppxPackage Microsoft.Xbox.TCUI* | Remove-AppxPackage
 Get-AppxPackage Microsoft.XboxApp* | Remove-AppxPackage
 ## weather
 Get-AppxPackage Microsoft.BinWeather* | Remove-AppxPackage
+
+# set global execution policy for the whole machine
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
