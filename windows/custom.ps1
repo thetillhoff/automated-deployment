@@ -39,5 +39,8 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 ## set accent color on title bars
 #Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\DWM' -Name 'ColorPrevalence' -Value 1
 
+# add scripts to C:/Windows, which is included in path
+cp ./scripts/hide.ps1 C:/Windows/hide.ps1
+
 # remove everything from desktop
 rm $HOME\Desktop\*
