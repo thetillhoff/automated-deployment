@@ -7,6 +7,9 @@ Foreach ($e in @("ms-azuretools.vscode-docker","ms-python.python","ms-vscode.Go"
     code --install-extension $e
 }
 
+# install Visual Studio 2019 Community
+choco install -y visualstudio2019community
+
 # install git
 choco install -y git
 
