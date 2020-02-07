@@ -6,6 +6,14 @@ choco install -y googlechrome
 
 # uninstall games
 Get-AppxPackage king.com.FarmHeroesSaga* | Remove-AppxPackage
+Get-AppxPackage xingag.xing* | Remove-AppxPackage
+Get-AppxPackage Microsoft.bingnews* | Remove-AppxPackage
+Get-AppxPackage spotifyab.spotifymusic* | Remove-AppxPackage
+Get-AppxPackage king.com.candycrushfriends* | Remove-AppxPackage
+Get-AppxPackage king.com.candycrushsaga* | Remove-AppxPackage
+Get-AppxPackage Microsoft.gethelp* | Remove-AppxPackage
+Get-AppxPackage Microsoft.bingweather* | Remove-AppxPackage
+Get-AppxPackage Microsoft.office.oneone* | Remove-AppxPackage
 Get-AppxPackage Microsoft.MicrosoftSolitaireCollection* | Remove-AppxPackage
 
 # uninstall other unnecessary software
