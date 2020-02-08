@@ -39,8 +39,18 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 ## set accent color on title bars
 #Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\DWM' -Name 'ColorPrevalence' -Value 1
 
+# disable onedrive ads
+Set-ItemProperty -Path 'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'ShowSyncProviderNotifications' -Value 0
+
 # add scripts to C:/Windows, which is included in path
 Copy-Item ./windows/files/hide.ps1 C:/Windows/hide.ps1
 
-# remove everything from desktop
+# remove everything from (public & user) desktop
+Remove-Item C:\Users\Public\Desktop\*
 Remove-Item $HOME\Desktop\*
+#Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace' -Name '{645FF040-5081-101B-9F08-00AA002F954E}' #recycle bin
+
+# clear taskbar (only explorer remains)
+reg import ./windows/files/cleantaskbar.reg
+# add shortcuts to taskbar:
+#%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\... -> OneNote, Outlook, but not ms-task, chrome
