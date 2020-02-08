@@ -5,7 +5,7 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Advertis
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Input\TIPC" -Name Enabled -Value 0
 
 # disable languagelist on websites
-Set-ItemProperty -Path "HKCU:\Control Panel\International\User Profile" -Name HttpAcceptLanguageOptOut -Value 0
+Set-ItemProperty -Path "HKCU:\Control Panel\International\User Profile" -Name HttpAcceptLanguageOptOut -Value 1
 
 # disable location information
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name Value -Value "Deny"
@@ -60,6 +60,9 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft
 # 0 disables phishingfilter, 1 enables it
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\PhishingFilter" -Name EnabledV9 -Value 0
 
+# "Disable SmartScreen Filter to check web content"
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppHost" -Name EnableWebContentEvaluation -Value 0
+
 # disable notifications for apps
 #Set-ItemProperty -Path "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\userNotificationListener" -Name Value -Value "Deny"
 
@@ -91,7 +94,7 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\featu
 # disable telemetry data
 Set-service -Name DiagTrack -StartupType Disabled
 Stop-Service -Name DiagTrack -Force
-if((Get-Service | where Name -eq dmwappushservice).count -eq 1)
+if((Get-Service | Where-Object Name -eq dmwappushservice).count -eq 1)
     {
         Stop-Service -Name dmwappushservice -Force
         Set-service -Name dmwappushservice -StartupType Disabled

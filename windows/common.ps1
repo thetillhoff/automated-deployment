@@ -4,6 +4,9 @@ choco install -y 7zip
 # install Google Chrome
 choco install -y googlechrome
 
+# install Adobe Reader DC
+choco install -y adobereader
+
 # uninstall games
 Get-AppxPackage king.com.FarmHeroesSaga* | Remove-AppxPackage
 Get-AppxPackage xingag.xing* | Remove-AppxPackage
@@ -12,6 +15,11 @@ Get-AppxPackage spotifyab.spotifymusic* | Remove-AppxPackage
 Get-AppxPackage king.com.candycrushfriends* | Remove-AppxPackage
 Get-AppxPackage king.com.candycrushsaga* | Remove-AppxPackage
 Get-AppxPackage Microsoft.gethelp* | Remove-AppxPackage
+#Get-AppxPackage Microsoft.getstarted* | Remove-AppxPackage
+#Get-AppxPackage Microsoft.messaging* | Remove-AppxPackage
+#Get-AppxPackage Microsoft.office.onenote* | Remove-AppxPackage
+#Get-AppxPackage Microsoft.people* | Remove-AppxPackage
+#Get-AppxPackage Microsoft.WindowsFeedbackHub* | Remove-AppxPackage
 Get-AppxPackage Microsoft.bingweather* | Remove-AppxPackage
 Get-AppxPackage Microsoft.office.oneone* | Remove-AppxPackage
 Get-AppxPackage Microsoft.MicrosoftSolitaireCollection* | Remove-AppxPackage
