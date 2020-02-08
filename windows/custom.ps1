@@ -40,7 +40,7 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 #Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\DWM' -Name 'ColorPrevalence' -Value 1
 
 # add scripts to C:/Windows, which is included in path
-Copy-Item ./windows/scripts/hide.ps1 C:/Windows/hide.ps1
+Copy-Item ./windows/files/hide.ps1 C:/Windows/hide.ps1
 
 # remove everything from desktop
 Remove-Item $HOME\Desktop\*
