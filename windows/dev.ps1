@@ -19,8 +19,8 @@ choco install -y git-fork
 # install python with pip
 choco install -y python
 
-# install go
-choco install -y go
+# install golang
+choco install -y golang
 
 # install go-task
 scoop bucket add extras; scoop install task --global
