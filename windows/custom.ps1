@@ -1,6 +1,9 @@
 # install f.lux
 choco install -y f.lux
 
+# install jdownloader
+choco install -y jdownloader
+
 # show file extensions
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HidefileExt' -Value 0
 
