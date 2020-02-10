@@ -7,8 +7,8 @@ choco install -y googlechrome
 # install Adobe Reader DC
 choco install -y adobereader
 
-# install Java Runtime
-choco install -y javaruntime
+# install Java Runtime 8
+choco install -y jre8
 
 # install WinDirStat
 choco install -y windirstat
