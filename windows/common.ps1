@@ -7,6 +7,9 @@ choco install -y googlechrome
 # install Adobe Reader DC
 choco install -y adobereader
 
+# install Java Runtime
+choco install -y javaruntime
+
 # uninstall games
 Get-AppxPackage king.com.FarmHeroesSaga* | Remove-AppxPackage
 Get-AppxPackage xingag.xing* | Remove-AppxPackage
