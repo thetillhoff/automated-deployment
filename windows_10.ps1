@@ -34,7 +34,7 @@ $restartrequired = $false
 ./windows/dev.ps1
 ./windows/docker.ps1
 ./windows/hyperv.ps1
-./windows/office365.ps1
+#./windows/office365.ps1 # install manually for x64 and other options
 ./windows/custom.ps1
 #$customconfigjob = Start-Job -ScriptBlock {./windows/custom.ps1} -Credential $Credential
 #Wait-Job $customconfigjob
