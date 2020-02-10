@@ -1,3 +1,19 @@
+$msg = 'Did you double-check the selected roles? [Y/N]'
+do {
+    $response = Read-Host -Prompt $msg
+    if ($response -ne 'y*') {
+        Write-Host "Please double-check the roles."
+    }
+} until ($response -eq 'y*')
+
+$msg = 'Did you double-check the custom.ps1-script? [Y/N]'
+do {
+    $response = Read-Host -Prompt $msg
+    if ($response -ne 'y*') {
+        Write-Host "Please double-check the custom.ps1-script."
+    }
+} until ($response -eq 'y*')
+
 # prerequisites
 
 ## install chocolatey
@@ -17,6 +33,8 @@ $restartrequired = $false
 ./windows/common.ps1
 ./windows/dev.ps1
 ./windows/docker.ps1
+./windows/hyperv.ps1
+./windows/office365.ps1
 ./windows/custom.ps1
 #$customconfigjob = Start-Job -ScriptBlock {./windows/custom.ps1} -Credential $Credential
 #Wait-Job $customconfigjob
@@ -24,6 +42,7 @@ $restartrequired = $false
 
 if ($restartrequired){
   Write-Output "Restart required!"
+  Write-Output ""
 }
 
 Write-Output "What is now missing:"
