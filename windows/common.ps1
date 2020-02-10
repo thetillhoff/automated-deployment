@@ -19,6 +19,8 @@ choco install -y paint.net
 # install vlc media player
 choco install -y vlc
 
+# install veeam-agent
+choco install -y veeam-agent
 # uninstall games
 Get-AppxPackage king.com.FarmHeroesSaga* | Remove-AppxPackage
 Get-AppxPackage xingag.xing* | Remove-AppxPackage
