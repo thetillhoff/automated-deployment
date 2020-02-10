@@ -10,6 +10,15 @@ choco install -y adobereader
 # install Java Runtime
 choco install -y javaruntime
 
+# install WinDirStat
+choco install -y windirstat
+
+# install paint.net
+choco install -y paint.net
+
+# install vlc media player
+choco install -y vlc
+
 # uninstall games
 Get-AppxPackage king.com.FarmHeroesSaga* | Remove-AppxPackage
 Get-AppxPackage xingag.xing* | Remove-AppxPackage
