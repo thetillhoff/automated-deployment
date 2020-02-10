@@ -32,7 +32,7 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 # set explorer to never show frequently used files in quick access
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer' -Name 'ShowFrequent' -Value 0
 # delete history of recently and frequently used files
-rm -recurse -force %appdata%/Microsoft/Windows/Recent/*
+Remove-Item -recurse -force %appdata%/Microsoft/Windows/Recent/*
 # restart explorer afterwards
 taskkill /IM explorer.exe /F; explorer.exe
 
@@ -54,7 +54,7 @@ for ($i = 0; $i -le 5; $i++)
   }
 }
 # change background image
-cp ./windows/files/black.png C:/windows/black.png
+Copy-Item ./windows/files/black.png C:/windows/black.png
 Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value C:/windows/black.png
 $restartrequired = $true
 
