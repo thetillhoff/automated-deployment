@@ -4,6 +4,12 @@ choco install -y f.lux
 # install jdownloader
 choco install -y jdownloader
 
+# install whatsapp desktop
+choco install -y whatsapp
+
+# install nmap
+choco install -y nmap
+
 # show file extensions
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HidefileExt' -Value 0
 
