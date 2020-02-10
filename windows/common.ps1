@@ -21,6 +21,10 @@ choco install -y vlc
 
 # install veeam-agent
 choco install -y veeam-agent
+
+# copy netspeedmonitor-installer to desktop
+Copy-Item ./windows/files/netspeedmonitor.msi ~/Desktop/netspeedmonitor.msi
+
 # uninstall games
 Get-AppxPackage king.com.FarmHeroesSaga* | Remove-AppxPackage
 Get-AppxPackage xingag.xing* | Remove-AppxPackage
