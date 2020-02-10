@@ -29,4 +29,13 @@ scoop bucket add extras; scoop install task --global
 choco install -y hugo-extended
 
 # install heidi-sql
-choco install heidisql
+choco install -y heidisql
+
+# install putty
+choco install -y putty
+
+# install filezilla
+choco install -y filezilla
+
+# install openssh
+choco install -y openssh
