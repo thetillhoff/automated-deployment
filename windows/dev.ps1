@@ -26,7 +26,7 @@ choco install -y golang
 scoop bucket add extras; scoop install task --global
 
 # install go-hugo with scss support
-choco install hugo-extended -confirm
+choco install -y hugo-extended
 
 # install heidi-sql
 choco install heidisql
