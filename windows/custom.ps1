@@ -42,6 +42,9 @@ Remove-Item -recurse -force $env:APPDATA/Microsoft/Windows/Recent/*
 # restart explorer afterwards
 taskkill /IM explorer.exe /F; explorer.exe
 
+ # disable 'recently added' on startmenu
+ Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer' -Name 'HideRecentlyAddedApps' -Value 0
+
 # switch to darkmode
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'AppsUseLightTheme' -Value 0
 # disable transparency
