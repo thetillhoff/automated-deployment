@@ -1,18 +1,18 @@
-$msg = 'Did you double-check the selected roles? [Y/N]'
+$msg = 'Did you double-check the selected roles? [y]'
 do {
     $response = Read-Host -Prompt $msg
-    if ($response -ne 'y*') {
+    if ($response -ne 'y') {
         Write-Host "Please double-check the roles."
     }
-} until ($response -eq 'y*')
+} until ($response -eq 'y')
 
-$msg = 'Did you double-check the custom.ps1-script? [Y/N]'
+$msg = 'Did you double-check the custom.ps1-script? [y]'
 do {
     $response = Read-Host -Prompt $msg
-    if ($response -ne 'y*') {
+    if ($response -ne 'y') {
         Write-Host "Please double-check the custom.ps1-script."
     }
-} until ($response -eq 'y*')
+} until ($response -eq 'y')
 
 # prerequisites
 
@@ -35,6 +35,8 @@ $restartrequired = $false
 ./windows/docker.ps1
 ./windows/hyperv.ps1
 #./windows/office365.ps1 # install manually for x64 and other options
+./windows/teamviewer.ps1
+./windows/gamelauncher.ps1 # steam etc.
 ./windows/custom.ps1
 #$customconfigjob = Start-Job -ScriptBlock {./windows/custom.ps1} -Credential $Credential
 #Wait-Job $customconfigjob
@@ -50,7 +52,7 @@ Write-Output "- install office, Visio"
 Write-Output "- install enpass"
 Write-Output "- install netspeedmonitor (file on desktop)"
 Write-Output "- install Microsoft-ToDo (from store)"
-Write-Output "- install games/launchers"
+Write-Output "- install league of legends"
 Write-Output "? install ecplise"
 Write-Output "? install Firefox"
 Write-Output "? install nodejs"
@@ -61,4 +63,6 @@ Write-Output "open todos:"
 Write-Output "- cleaning of start menu tiles ('unpin group')"
 Write-Output "- log into onedrive, enpass, chrome, office"
 Write-Output "- configure printers"
+Write-Output "- activate windows"
 Write-Output "- configure ssh stuff"
+Write-Output "- configure game launchers (steam, uplay, epic, origin)"

@@ -38,7 +38,7 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 # set explorer to never show frequently used files in quick access
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer' -Name 'ShowFrequent' -Value 0
 # delete history of recently and frequently used files
-Remove-Item -recurse -force %appdata%/Microsoft/Windows/Recent/*
+Remove-Item -recurse -force $env:APPDATA/Microsoft/Windows/Recent/*
 # restart explorer afterwards
 taskkill /IM explorer.exe /F; explorer.exe
 
@@ -52,30 +52,32 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 #Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\DWM' -Name 'ColorPrevalence' -Value 1
 
 # delete background image history
-for ($i = 0; $i -le 5; $i++)
-{
-  if (Test-RegistryValue -path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers" -value "BackgroundHistoryPath$i" )
-  {
-    Remove-itemproperty -path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers" -name "BackgroundHistoryPath$i" 
-  }
-}
+#for ($i = 0; $i -le 5; $i++)
+#{
+#  if (Test-RegistryValue -path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers" -value "BackgroundHistoryPath$i" )
+#  {
+#    Remove-ItemProperty -path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers" -name "BackgroundHistoryPath$i" 
+#  }
+#}
 # change background image
-Copy-Item ./windows/files/black.png C:/windows/black.png
-Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value C:/windows/black.png
+Copy-Item ./windows/files/black.jpg C:/windows/black.jpg
+Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value C:/windows/black.jpg
 $restartrequired = $true
 
 # disable web results in start-menu-search
 Set-WindowsSearchSetting -EnableWebResultsSetting $false
 
 # disable onedrive ads
-Set-ItemProperty -Path 'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'ShowSyncProviderNotifications' -Value 0
+Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'ShowSyncProviderNotifications' -Value 0
 
 # add scripts to C:/Windows, which is included in path
 Copy-Item ./windows/files/hide.ps1 C:/Windows/hide.ps1
+$currentlocation=Get-Location;
+cd C:\;hide.ps1;cd $currentlocation;
 
 # remove everything from (public & user) desktop
-Remove-Item C:\Users\Public\Desktop\*
-Remove-Item $HOME\Desktop\*
+Remove-Item C:\Users\Public\Desktop\*.lnk
+Remove-Item $HOME\Desktop\*.lnk
 #Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace' -Name '{645FF040-5081-101B-9F08-00AA002F954E}' #recycle bin
 
 # clear taskbar (only explorer remains)

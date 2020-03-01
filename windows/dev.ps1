@@ -17,10 +17,10 @@ choco install -y git
 choco install -y git-fork
 
 # install python with pip
-choco install -y python
+choco install -y python --params "/INSTALLDIR:C:\.Python38"
 
 # install golang
-choco install -y golang
+choco install -y golang --install-arguments="INSTALLDIR=C:\.Go"
 
 # install go-task
 scoop bucket add extras; scoop install task --global
