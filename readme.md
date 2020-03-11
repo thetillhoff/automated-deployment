@@ -3,7 +3,7 @@
 ## installation on linux
 
 Please make sure to run the prerequisites.sh file as root first.
-Next run the run.sh file as a normal user.
+Next run ```ansible-playbook ubuntu_1804_hyperv_quickcreate.yml --ask-become-pass``` as a normal user.
 For more information to overall configuration see readme_linux.md.
 
 ## installation on windows
