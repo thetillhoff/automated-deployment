@@ -9,6 +9,8 @@ Foreach ($e in @("ms-azuretools.vscode-docker","ms-python.python","ms-vscode.Go"
 
 # install Visual Studio 2019 Community
 choco install -y visualstudio2019community
+# remove context-menu integration of visual studio community
+Remove-ItemProperty -Path 'HKCR:\Directory\shell' -Name 'AnyCode'
 
 # install git
 choco install -y git
