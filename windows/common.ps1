@@ -18,6 +18,9 @@ choco install -y paint.net
 
 # install vlc media player
 choco install -y vlc
+# remove vlc context-menu integration
+Remove-ItemProperty -Path 'HKCR:\Directory\shell' -Name 'PlayWithVLC'
+Remove-ItemProperty -Path 'HKCR:\Directory\shell' -Name 'AddtoPlaylistVLC'
 
 # install veeam-agent
 choco install -y veeam-agent
