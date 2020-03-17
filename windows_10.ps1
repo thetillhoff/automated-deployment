@@ -14,13 +14,14 @@ do {
     }
 } until ($response -eq 'y')
 
+
 # prerequisites
 
 ## install chocolatey
-./windows/install_choco.ps1
+./windows/install_choco.ps1 | Tee-Object -Append -FilePath "C:\automated-deployment.log"
 
 ## install scoop
-./windows/install_scoop.ps1
+./windows/install_scoop.ps1 | Tee-Object -Append -FilePath "C:\automated-deployment.log"
 
 
 # variables
@@ -28,41 +29,42 @@ do {
 #Get credentials for given user
 #$Credential = Get-Credential $USER
 $restartrequired = $false
+$logfilelocation = "C:\automated-deployment.log"
 
 # roles
-./windows/common.ps1
-./windows/dev.ps1
-./windows/docker.ps1
-./windows/hyperv.ps1
-#./windows/office365.ps1 # install manually for x64 and other options
-./windows/teamviewer.ps1
-./windows/gamelauncher.ps1 # steam etc.
-./windows/custom.ps1
+./windows/common.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
+./windows/dev.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
+./windows/docker.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
+./windows/hyperv.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
+#./windows/office365.ps1| Tee-Object -Append -FilePath "$logfilelocation" # install manually for x64 and other options
+./windows/teamviewer.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
+./windows/gamelauncher.ps1 | Tee-Object -Append -FilePath "$logfilelocation" # steam etc.
+./windows/custom.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
 #$customconfigjob = Start-Job -ScriptBlock {./windows/custom.ps1} -Credential $Credential
 #Wait-Job $customconfigjob
 #Receive-Job -Job $customconfigjob
 
 if ($restartrequired){
-  Write-Output "Restart required!"
-  Write-Output ""
+  Write-Output "Restart required!" | Tee-Object -Append -FilePath "$logfilelocation"
+  Write-Output "" | Tee-Object -Append -FilePath "$logfilelocation"
 }
 
-Write-Output "What is now missing:"
-Write-Output "- install office, Visio"
-Write-Output "- install enpass"
-Write-Output "- install netspeedmonitor (file on desktop)"
-Write-Output "- install Microsoft-ToDo (from store)"
-Write-Output "- install league of legends"
-Write-Output "? install ecplise"
-Write-Output "? install Firefox"
-Write-Output "? install nodejs"
-Write-Output "? install openshot video editor"
-Write-Output "? install Teamspeak"
-Write-Output ""
-Write-Output "open todos:"
-Write-Output "- cleaning of start menu tiles ('unpin group')"
-Write-Output "- log into onedrive, enpass, chrome, office"
-Write-Output "- configure printers"
-Write-Output "- activate windows"
-Write-Output "- configure ssh stuff"
-Write-Output "- configure game launchers (steam, uplay, epic, origin)"
+Write-Output "What is now missing:" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- install office, Visio" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- install enpass" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- install netspeedmonitor (file on desktop)" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- install Microsoft-ToDo (from store)" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- install league of legends" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "? install ecplise" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "? install Firefox" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "? install nodejs" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "? install openshot video editor" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "? install Teamspeak" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "open todos:" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- cleaning of start menu tiles ('unpin group')" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- log into onedrive, enpass, chrome, office" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- configure printers" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- activate windows" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- configure ssh stuff" | Tee-Object -Append -FilePath "$logfilelocation"
+Write-Output "- configure game launchers (steam, uplay, epic, origin)" | Tee-Object -Append -FilePath "$logfilelocation"
