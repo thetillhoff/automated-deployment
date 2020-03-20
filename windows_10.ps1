@@ -53,7 +53,8 @@ $elevated_cmds += ,"./windows/hyperv.ps1 | Tee-Object -Append -FilePath '$logfil
 #./windows/office365.ps1| Tee-Object -Append -FilePath "$logfile" # install manually for x64 and other options
 $elevated_cmds += ,"./windows/teamviewer.ps1 | Tee-Object -Append -FilePath '$logfile'"
 $elevated_cmds += ,"./windows/./windows/gamelauncher.ps1 | Tee-Object -Append -FilePath '$logfile'"
-$normal_cmds += ,"./windows/custom.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"./windows/custom-system.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$normal_cmds += ,"./windows/custom-user.ps1 | Tee-Object -Append -FilePath '$logfile'"
 
 
 # this should be near the enf ot the script:
