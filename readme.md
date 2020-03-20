@@ -11,7 +11,7 @@ For more information to overall configuration see readme_linux.md.
 Ansible wasn't used for windows-host-deployment, as ansible requires a linux control node.
 So, to achieve a similar way of working, powershell was used.
 
-Start Powershell as admin and run
+Start Powershell (NOT as admin) and run
   Set-ExecutionPolicy Bypass -Scope Process -Force;
   ./windows_10.ps1
   

@@ -1,3 +1,10 @@
+# stupidity checks
+$user = [Security.Principal.WindowsIdentity]::GetCurrent();
+if (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator) {
+    Write-Host "You ran this as admin. Please read the readme.md and make sure to not run this as admin."
+    exit
+}
+
 $msg = 'Did you double-check the selected roles? [y]'
 do {
     $response = Read-Host -Prompt $msg
@@ -15,56 +22,66 @@ do {
 } until ($response -eq 'y')
 
 
-# prerequisites
-
-## install chocolatey
-./windows/install_choco.ps1 | Tee-Object -Append -FilePath "C:\automated-deployment.log"
-
-## install scoop
-./windows/install_scoop.ps1 | Tee-Object -Append -FilePath "C:\automated-deployment.log"
-
-
 # variables
-#$USER = $env:UserName
-#Get credentials for given user
-#$Credential = Get-Credential $USER
-$restartrequired = $false
-$logfilelocation = "C:\automated-deployment.log"
+$restartrequired = $false # default
+$logfile = "C:\autoamted-deployment.log"
+$normal_cmds = @()
+$elevated_cmds = @()
 
-# roles
-./windows/common.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
-./windows/dev.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
-./windows/docker.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
-./windows/hyperv.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
-#./windows/office365.ps1| Tee-Object -Append -FilePath "$logfilelocation" # install manually for x64 and other options
-./windows/teamviewer.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
-./windows/gamelauncher.ps1 | Tee-Object -Append -FilePath "$logfilelocation" # steam etc.
-./windows/custom.ps1 | Tee-Object -Append -FilePath "$logfilelocation"
-#$customconfigjob = Start-Job -ScriptBlock {./windows/custom.ps1} -Credential $Credential
-#Wait-Job $customconfigjob
-#Receive-Job -Job $customconfigjob
 
-if ($restartrequired){
-  Write-Output "Restart required!" | Tee-Object -Append -FilePath "$logfilelocation"
-  Write-Output "" | Tee-Object -Append -FilePath "$logfilelocation"
+# helper-functions
+function run-normal {
+    Param($cmds)
+    Start-Process powershell -nonewwindow -wait -ArgumentList $cmds
+}
+function run-elevated {
+    Param($cmds)
+    Start-Process powershell -wait -verb runas -ArgumentList $cmds
 }
 
-Write-Output "What is now missing:" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- install office, Visio" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- install enpass" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- install netspeedmonitor (file on desktop)" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- install Microsoft-ToDo (from store)" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- install league of legends" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "? install ecplise" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "? install Firefox" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "? install nodejs" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "? install openshot video editor" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "? install Teamspeak" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "open todos:" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- cleaning of start menu tiles ('unpin group')" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- log into onedrive, enpass, chrome, office" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- configure printers" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- activate windows" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- configure ssh stuff" | Tee-Object -Append -FilePath "$logfilelocation"
-Write-Output "- configure game launchers (steam, uplay, epic, origin)" | Tee-Object -Append -FilePath "$logfilelocation"
+
+# prerequisites
+$elevated_cmds += ,"./windows/install_choco.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"./windows/install_scoop.ps1 | Tee-Object -Append -FilePath '$logfile'"
+
+
+# roles
+$elevated_cmds += ,"./windows/common.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"./windows/dev.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"./windows/docker.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"./windows/hyperv.ps1 | Tee-Object -Append -FilePath '$logfile'"
+#./windows/office365.ps1| Tee-Object -Append -FilePath "$logfile" # install manually for x64 and other options
+$elevated_cmds += ,"./windows/teamviewer.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"./windows/./windows/gamelauncher.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$normal_cmds += ,"./windows/custom.ps1 | Tee-Object -Append -FilePath '$logfile'"
+
+
+# this should be near the enf ot the script:
+run-normal -cmd $($cmds -join "; ")
+$elevated_cmds += ,"sleep 3" # so the output of the window is readable for a short time - despite the logfile
+run-elevated -cmd $($elevated_cmds -join "; ")
+
+# finishing
+if ($restartrequired){
+  Write-Output "Restart required!" | Tee-Object -Append -FilePath "$logfile"
+  Write-Output "" | Tee-Object -Append -FilePath "$logfile"
+}
+Write-Output "What is now missing:" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- install office, Visio" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- install enpass" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- install netspeedmonitor (file on desktop)" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- install Microsoft-ToDo (from store)" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- install league of legends" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "? install ecplise" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "? install Firefox" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "? install nodejs" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "? install openshot video editor" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "? install Teamspeak" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "open todos:" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- cleaning of start menu tiles ('unpin group')" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- login to onedrive, enpass, chrome, office" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- configure printers" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- activate windows" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- configure ssh stuff" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "- login & configuration of game launchers (steam, uplay, epic, origin)" | Tee-Object -Append -FilePath "$logfile"
