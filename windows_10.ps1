@@ -1,6 +1,6 @@
 # stupidity checks
 $user = [Security.Principal.WindowsIdentity]::GetCurrent();
-if (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator) {
+if ((New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)) {
     Write-Host "You ran this as admin. Please read the readme.md and make sure to not run this as admin."
     exit
 }
