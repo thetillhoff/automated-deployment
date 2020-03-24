@@ -41,8 +41,8 @@ function run-elevated {
 
 
 # prerequisites
-$elevated_cmds += ,"./windows/install_choco.ps1 | Tee-Object -Append -FilePath '$logfile'"
-$elevated_cmds += ,"./windows/install_scoop.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"./windows/install-choco.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"./windows/install-scoop.ps1 | Tee-Object -Append -FilePath '$logfile'"
 
 
 # roles

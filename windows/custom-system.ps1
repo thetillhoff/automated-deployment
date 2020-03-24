@@ -11,6 +11,17 @@ choco install -y whatsapp
 choco install -y nmap
 
 
+# install fonts
+$Source      = "../files/*"
+$Destination = (New-Object -ComObject Shell.Application).Namespace(0x14)
+Get-ChildItem -Path $Source -Include '*.ttf','*.ttc','*.otf' -Recurse | ForEach {
+    If (-not(Test-Path "C:\Windows\Fonts\$($_.Name)")) {
+        # Install font
+        $Destination.CopyHere($_.FullName,0x10)
+    }
+}
+
+
 # As the 'Quick Access' elements is accessible in contrast to the default folders from 'This PC', the following remove/add is done:
 # hide music folder from 'This PC' in Explorer
 Set-ItemProperty -Path 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{a0c69a99-21c8-4671-8703-7934162fcf1d}\PropertyBag' -Name 'ThisPCPolicy' -Value 'Hide'
