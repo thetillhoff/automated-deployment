@@ -49,7 +49,7 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 #  }
 #}
 # change background image
-Copy-Item ./windows/files/black.jpg C:/windows/black.jpg
+Copy-Item $PSScriptRoot/files/black.jpg C:/windows/black.jpg
 Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value C:/windows/black.jpg
 $restartrequired = $true
 

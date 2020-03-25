@@ -15,3 +15,6 @@ Start Powershell (NOT as admin) and run
   Set-ExecutionPolicy Bypass -Scope Process -Force;
   ./windows_10.ps1
   
+### todo on windows
+- font installation: check not only for a font-name but also for the subclasses (regular, thin, etc.).
+- on every registry-change, check if value is already set.

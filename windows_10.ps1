@@ -1,3 +1,11 @@
+# variables
+$PSScriptRoot
+$restartrequired = $false # default
+$logfile = "$PSScriptRoot/automated-deployment.log"
+$normal_cmds = @()
+$elevated_cmds = @()
+
+
 # stupidity checks
 $user = [Security.Principal.WindowsIdentity]::GetCurrent();
 if ((New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)) {
@@ -22,13 +30,6 @@ do {
 } until ($response -eq 'y')
 
 
-# variables
-$restartrequired = $false # default
-$logfile = "C:\autoamted-deployment.log"
-$normal_cmds = @()
-$elevated_cmds = @()
-
-
 # helper-functions
 function run-normal {
     Param($cmds)
@@ -41,48 +42,62 @@ function run-elevated {
 
 
 # prerequisites
-$elevated_cmds += ,"./windows/install-choco.ps1 | Tee-Object -Append -FilePath '$logfile'"
-$elevated_cmds += ,"./windows/install-scoop.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$normal_cmds += ,"Start-Transcript -Append '$logfile'" # start transcript, as commands start in another window
+$elevated_cmds += ,"Start-Transcript -Append '$logfile'" # start another transcript, as elevated commands start in another window
+$elevated_cmds += ,"echo '*** ELEVATED LOG STARTS HERE ***'" # mark the start of elevated commands
+$elevated_cmds += ,"$PSScriptRoot/windows/install-choco.ps1"
+$elevated_cmds += ,"$PSScriptRoot/windows/install-scoop.ps1"
 
 
 # roles
-$elevated_cmds += ,"./windows/common.ps1 | Tee-Object -Append -FilePath '$logfile'"
-$elevated_cmds += ,"./windows/dev.ps1 | Tee-Object -Append -FilePath '$logfile'"
-$elevated_cmds += ,"./windows/docker.ps1 | Tee-Object -Append -FilePath '$logfile'"
-$elevated_cmds += ,"./windows/hyperv.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"$PSScriptRoot/windows/common.ps1"
+$elevated_cmds += ,"$PSScriptRoot/windows/dev.ps1"
+$elevated_cmds += ,"$PSScriptRoot/windows/docker.ps1"
+$elevated_cmds += ,"$PSScriptRoot/windows/hyperv.ps1"
 #./windows/office365.ps1| Tee-Object -Append -FilePath "$logfile" # install manually for x64 and other options
-$elevated_cmds += ,"./windows/teamviewer.ps1 | Tee-Object -Append -FilePath '$logfile'"
-$elevated_cmds += ,"./windows/./windows/gamelauncher.ps1 | Tee-Object -Append -FilePath '$logfile'"
-$elevated_cmds += ,"./windows/custom-system.ps1 | Tee-Object -Append -FilePath '$logfile'"
-$normal_cmds += ,"./windows/custom-user.ps1 | Tee-Object -Append -FilePath '$logfile'"
+$elevated_cmds += ,"$PSScriptRoot/windows/teamviewer.ps1"
+$elevated_cmds += ,"$PSScriptRoot/windows/./windows/gamelauncher.ps1"
+$elevated_cmds += ,"$PSScriptRoot/windows/custom-system.ps1"
+$normal_cmds += ,"$PSScriptRoot/windows/custom-user.ps1"
 
 
-# this should be near the enf ot the script:
-run-normal -cmd $($cmds -join "; ")
-$elevated_cmds += ,"sleep 3" # so the output of the window is readable for a short time - despite the logfile
-run-elevated -cmd $($elevated_cmds -join "; ")
+# this should be near the end ot the script:
+if ($normal_cmds.count -gt 0) {
+    $normal_cmds += ,"Stop-Transcript" # not necessarily required, as the transcript stops when the window closes
+    run-normal -cmd $($normal_cmds -join "; ")
+}
+if ($elevated_cmds.count -gt 0) {
+    $elevated_cmds += ,"Stop-Transcript" # not necessarily required, as the transcript stops when the window closes
+    $elevated_cmds += ,"sleep 5" # so the output of the window is readable for a short time - despite the logfile
+    run-elevated -cmd $($elevated_cmds -join "; ")
+}
+
+# start log-file
+Start-Transcript -Append "$logfile"
 
 # finishing
 if ($restartrequired){
-  Write-Output "Restart required!" | Tee-Object -Append -FilePath "$logfile"
-  Write-Output "" | Tee-Object -Append -FilePath "$logfile"
+  Write-Output "Restart required!"
+  Write-Output ""
 }
-Write-Output "What is now missing:" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- install office, Visio" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- install enpass" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- install netspeedmonitor (file on desktop)" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- install Microsoft-ToDo (from store)" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- install league of legends" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "? install ecplise" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "? install Firefox" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "? install nodejs" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "? install openshot video editor" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "? install Teamspeak" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "open todos:" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- cleaning of start menu tiles ('unpin group')" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- login to onedrive, enpass, chrome, office" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- configure printers" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- activate windows" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- configure ssh stuff" | Tee-Object -Append -FilePath "$logfile"
-Write-Output "- login & configuration of game launchers (steam, uplay, epic, origin)" | Tee-Object -Append -FilePath "$logfile"
+Write-Output "What is now missing:"
+Write-Output "- install office, Visio"
+Write-Output "- install enpass"
+Write-Output "- install netspeedmonitor (file on desktop)"
+Write-Output "- install Microsoft-ToDo (from store)"
+Write-Output "- install league of legends"
+Write-Output "? install ecplise"
+Write-Output "? install Firefox"
+Write-Output "? install nodejs"
+Write-Output "? install openshot video editor"
+Write-Output "? install Teamspeak"
+Write-Output ""
+Write-Output "open todos:"
+Write-Output "- cleaning of start menu tiles ('unpin group')"
+Write-Output "- login to onedrive, enpass, chrome, office"
+Write-Output "- configure printers"
+Write-Output "- activate windows"
+Write-Output "- configure ssh stuff"
+Write-Output "- login & configuration of game launchers (steam, uplay, epic, origin)"
+
+Stop-Transcript # so further manual commands won't mess up the logfile
