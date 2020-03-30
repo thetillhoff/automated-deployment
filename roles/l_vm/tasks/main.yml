@@ -28,3 +28,5 @@
   become: true
 - name: delete ubuntu-vm script for hyperv
   shell: rm ./install.sh
+  
+# REQUIRED (on host): Set-VM -VMName <your_vm_name> -EnhancedSessionTransportType HvSocket
