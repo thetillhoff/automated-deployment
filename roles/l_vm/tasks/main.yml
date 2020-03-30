@@ -17,3 +17,14 @@
 - name: set gnome blank timout
   shell: gsettings set org.gnome.desktop.session idle-delay 0
   when: r_gnome_power_active != 0
+  
+- name: download ubuntu-vm script for hyperv
+  shell: wget https://raw.githubusercontent.com/Microsoft/linux-vm-tools/master/ubuntu/18.04/install.sh
+- name: allow script to be executed
+  shell: chmod +x install.sh
+  become: true
+- name: execute ubuntu-vm script for hyperv
+  shell: sudo ./install.sh
+  become: true
+- name: delete ubuntu-vm script for hyperv
+  shell: rm ./install.sh
