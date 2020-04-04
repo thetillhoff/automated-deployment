@@ -99,5 +99,6 @@ Write-Output "- configure printers"
 Write-Output "- activate windows"
 Write-Output "- configure ssh stuff"
 Write-Output "- login & configuration of game launchers (steam, uplay, epic, origin)"
+Write-Output "- create veeam backup job"
 
 Stop-Transcript # so further manual commands won't mess up the logfile

@@ -26,11 +26,10 @@
 #    - gnome installed
 
   roles:
-    #- l_common
-    #- l_dev
-    #- l_docker
-    #- l_minikube
-    #- l_vm
-    #- l_custom
+    - l_common
+    - l_dev
+    - l_docker
+    - l_minikube
+    - l_vm
+    - l_custom
 #    - l_extended
-    - test

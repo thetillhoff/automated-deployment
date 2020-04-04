@@ -33,14 +33,14 @@
   register: r_gnome_favorites
   changed_when: no
 - set_fact:
-    gnome_favorites: "{{ r_gnome_favorites.stdout | string }}"
-- set_fact:
-    gnome_wanted_favorites: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'code.desktop', 'git-cola.desktop', 'evince.desktop']"
+  # removing all " and ' form the strings, to be able to compare them properly
+    current_gnome_favorites: "{{ r_gnome_favorites.stdout | string | regex_replace(\"'\",'') }}"
+    wanted_gnome_favorites: "{{ gnome_favorites | to_json | string | regex_replace('\"','') }}"
 - name: set favorites of gnome bar
   become: true
   become_user: "{{ user }}"
-  shell: dconf write /org/gnome/shell/favorite-apps "{{ gnome_wanted_favorites }}"
-  when: gnome_favorites != gnome_wanted_favorites
+  shell: dconf write /org/gnome/shell/favorite-apps "{{ gnome_favorites | to_json }}"
+  when: current_gnome_favorites != wanted_gnome_favorites
 
 #///TODO add checkups (do only once) for enpass
 - name: add enpass to sources.list
