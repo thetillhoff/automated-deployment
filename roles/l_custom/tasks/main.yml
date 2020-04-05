@@ -39,7 +39,7 @@
 - name: set favorites of gnome bar
   become: true
   become_user: "{{ user }}"
-  shell: dconf write /org/gnome/shell/favorite-apps "{{ gnome_favorites | to_json }}"
+  shell: "dconf write /org/gnome/shell/favorite-apps \"{{ gnome_favorites | to_json | string | regex_replace('\"',\"'\") }}\""
   when: current_gnome_favorites != wanted_gnome_favorites
 
 #///TODO add checkups (do only once) for enpass
