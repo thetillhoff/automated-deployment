@@ -18,6 +18,10 @@
   shell: gsettings set org.gnome.desktop.session idle-delay 0
   when: r_gnome_power_active != 0
 
+- name: gather package facts
+  become: true
+  package_facts:
+    manager: apt
 - name: "execute ubuntu-vm-script for hyperv"
   become: true
   shell: |
@@ -130,7 +134,7 @@
 
     echo "Install is complete."
     echo "Reboot your machine to begin using XRDP."
-  when: "'xrdp' not in ansible_facts.packages and "
+  when: "'xrdp' not in ansible_facts.packages"
 
 
   
