@@ -98,7 +98,7 @@
   register: gotask_result
 - name: install go-task
   become: true
-  shell: curl -L https://github.com/go-task/task/releases/download/v{{ go-task_version }}/task_linux_amd64.deb -o ./go-task.deb && sudo dpkg -i ./go-task.deb && sudo rm ./go-task.deb
+  shell: curl -L https://github.com/go-task/task/releases/download/v{{ gotask_version }}/task_linux_amd64.deb -o ./go-task.deb && sudo dpkg -i ./go-task.deb && sudo rm ./go-task.deb
   when: gotask_result.stat.exists == false
   #task is added to /usr/local/bin/ and is thus automatically added to path
 

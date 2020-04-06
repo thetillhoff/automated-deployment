@@ -10,7 +10,7 @@
     git_mail: "till.hoffmann@enforge.de"
     nodejs_version:   "12.x"
     golang_version:   "1.13.1"
-    go-task_version:  "2.7.1"
+    gotask_version:  "2.7.1"
     minikube_version: "1.6.1"
     gnome_favorites:
         - org.gnome.Terminal.desktop
