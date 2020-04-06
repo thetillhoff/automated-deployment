@@ -30,12 +30,11 @@
 
   
 - name: configure vscode
-  become: yes
   template:
     src: settings.json.j2
     dest: '{{ homedir }}/.config/Code/User/settings.json'
     force: true
-    mode: 'u=rw,go='
+    #mode: 'u=rw,go=' # not sure if this is required
   vars:
     content: {
       "git.autofetch":true,
