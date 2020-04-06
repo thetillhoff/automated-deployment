@@ -32,17 +32,17 @@
 - name: configure vscode
   become: yes
   template:
-    src: settings.j2
+    src: settings.json.j2
     dest: '{{ homedir }}/.config/Code/User/settings.json'
     force: true
     mode: 'u=rw,go='
-    vars:
-      content: {
-        "git.autofetch":true,
-        "keyboard.dispatch":"keyCode",
-        "workbench.startupEditor":"newUntitledFile",
-        "editor.wordWrap":"on"
-        }
+  vars:
+    content: {
+      "git.autofetch":true,
+      "keyboard.dispatch":"keyCode",
+      "workbench.startupEditor":"newUntitledFile",
+      "editor.wordWrap":"on"
+      }
 
 # install and configure git-cli
 - name: install git
@@ -104,6 +104,7 @@
 
 # install nodejs
 - name: install dependencies for nodejs
+  become: true
   apt:
     name:
       - apt-transport-https
@@ -124,9 +125,11 @@
     - "deb-src https://deb.nodesource.com/node_{{ nodejs_version }} {{ ansible_distribution_release }} main"
   register: node_repo
 - name: update apt cache if repo was added
+  become: true
   apt: update_cache=yes
   when: node_repo.changed
 - name: install nodejs with npm
+  become: true
   apt:
     name: "nodejs={{ nodejs_version|regex_replace('x', '') }}*"
     state: present
