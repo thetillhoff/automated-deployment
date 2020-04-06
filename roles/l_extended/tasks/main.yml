@@ -1,5 +1,0 @@
-- name: install dconf
-  become: true
-  become_method: sudo
-  apt:
-    name: dconf-editor

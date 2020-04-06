@@ -52,12 +52,10 @@ tasks:
 
 - name: install cifs-utils for mounting cifs shares
   become: true
-  become_method: sudo
   apt:
     name: cifs-utils
 - name: mount cifs shares (Downloads)
   become: true
-  become_method: sudo
   mount:
     path: /mnt/Downloads
     src: //someserver/somefolder
@@ -66,7 +64,6 @@ tasks:
     state: present
 - name: mount cifs shares (workspace)
   become: true
-  become_method: sudo
   mount:
     path: /mnt/workspace
     src: //someserver/somefolder
@@ -75,7 +72,6 @@ tasks:
     state: present
 - name: mount cifs shares (.ssh)
   become: true
-  become_method: sudo
   mount:
     path: /mnt/.ssh
     src: //someserver/.ssh

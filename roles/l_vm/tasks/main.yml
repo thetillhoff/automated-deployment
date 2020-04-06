@@ -14,7 +14,7 @@
   changed_when: no
 - set_fact:
     r_gnome_blanktimeout_value: "{{ r_gnome_blanktimeout.stdout }}"
-- name: set gnome blank timout
+- name: set gnome blank timeout to infinity
   shell: gsettings set org.gnome.desktop.session idle-delay 0
   when: r_gnome_power_active != 0
   

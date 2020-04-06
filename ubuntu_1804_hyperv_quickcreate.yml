@@ -1,8 +1,6 @@
 - hosts: localhost
   connection: local
   run_once: true
-  #become: true
-  #become_method: sudo
   vars:
 #    somevar: example
 #    user: dev
@@ -10,7 +8,10 @@
     homedir: "{{ lookup('env','HOME') }}"
     git_name: "Till Hoffmann"
     git_mail: "till.hoffmann@enforge.de"
-    nodejs_version: node_12.x
+    nodejs_version:   "12.x"
+    golang_version:   "1.13.1"
+    go-task_version:  "2.7.1"
+    minikube_version: "1.6.1"
     gnome_favorites:
         - org.gnome.Terminal.desktop
         - org.gnome.Nautilus.desktop
@@ -24,6 +25,7 @@
 #    - sudo installed
 #    - user dev in suders list (remove task "append 'sudo' to groups the user ...")
 #    - gnome installed
+# -> see ./prerequisites.sh
 
   roles:
     - l_common
@@ -32,4 +34,3 @@
     - l_minikube
     - l_vm
     - l_custom
-#    - l_extended

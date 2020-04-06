@@ -11,6 +11,10 @@
   become_user: "{{ user }}"
   shell: gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
   when: gnome_theme != "'Adwaita-dark'"
+- name: install dconf-editor
+  become: true
+  apt:
+    name: dconf-editor
 
 - name: get gnome animation setting
   become: true
@@ -42,20 +46,24 @@
   shell: "dconf write /org/gnome/shell/favorite-apps \"{{ gnome_favorites | to_json | string | regex_replace('\"',\"'\") }}\""
   when: current_gnome_favorites != wanted_gnome_favorites
 
-#///TODO add checkups (do only once) for enpass
-- name: add enpass to sources.list
+- name: add enpass repo-key to apt
   become: true
-  become_method: sudo
-  shell: echo "deb https://apt.enpass.io/ stable main" > /etc/apt/sources.list.d/enpass.list
-- name: add enpass repo key
+  apt_key:
+    url: https://apt.enpass.io/keys/enpass-linux.key
+    state: present
+- name: add enpass repo to apt
   become: true
-  become_method: sudo
-  shell: wget -O - https://apt.enpass.io/keys/enpass-linux.key | apt-key add -
+  apt_repository:
+    repo: deb https://apt.enpass.io/ stable main
+    state: present
+    register: enpass_repo
+  when: enpass_repo.changed
+- name: update apt cache if repo was added
+  become: true
+  apt: update_cache=yes
+  when: enpass_repo.changed
 - name: install enpass
   become: true
-  become_method: sudo
   apt:
-    update_cache: yes
-    name:
-      - enpass
-  
+    name: enpass
+    state: present

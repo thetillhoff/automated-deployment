@@ -1,6 +1,5 @@
 - name: install kvm
   become: true
-  become_method: sudo
   apt:
     name:
       - qemu-kvm
@@ -9,23 +8,20 @@
       - virt-manager
 - name: append 'libvirt' and 'libvirt-qemu' to groups the user '{{ user }}' is in
   become: true
-  become_method: sudo
   user:
     name: "{{ user }}"
     groups: libvirt,libvirt-qemu
     append: yes
 - name: install minikube
   become: true
-  become_method: sudo
   apt:
-    deb: https://github.com/kubernetes/minikube/releases/download/v1.6.1/minikube_1.6.1.deb
+    deb: https://github.com/kubernetes/minikube/releases/download/v{{ minikube_version }}/minikube_{{ minikube_version }}.deb
 - name: check if docker-machine-driver is installed
   stat:
     path: /usr/local/bin/docker-machine-driver-kvm2
   register: docker_machine_driver_result
 - name: install docker-machine-driver for minikube
   become: true
-  become_method: sudo
   shell: curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 && install docker-machine-driver-kvm2 /usr/local/bin/ && rm docker-machine-driver-kvm2
   args:
     warn: false
@@ -39,13 +35,11 @@
     msg: Please run minikube start --vm-driver=kvm2 at least once
 - name: check if kubectl is installed
   become: true
-  become_method: sudo
   stat:
     path: /usr/local/bin/kubectl
   register: kubectl_result
 - name: install kubectl
   become: true
-  become_method: sudo
   shell: curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
   args:
     warn: false
@@ -56,5 +50,4 @@
 #     msg: "Please restart the host now. (Due to disabling apparmor for libvirt.)"
 # - name: disable apparmor
 #   become: true
-#   become_method: sudo
 #   shell: systemctl stop apparmor && systemctl disable apparmor

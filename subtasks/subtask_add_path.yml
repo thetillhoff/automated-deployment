@@ -1,7 +1,6 @@
 # https://coderwall.com/p/ynvi0q/updating-path-with-ansible-system-wide
 - name: add {{ extra_path }} to path
   become: true
-  become_method: sudo
   vars:
     extra_path: "{{ extra_path }}"
   lineinfile:
