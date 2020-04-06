@@ -17,16 +17,32 @@
     - ms-python.python
     - ms-vscode.Go
     - tomoki1207.pdf
+#- name: configure vscode
+  #copy:
+  #content: |
+  #          {
+  #          "git.autofetch":true,
+  #          "keyboard.dispatch":"keyCode",
+  #          "workbench.startupEditor":"newUntitledFile",
+  #          "editor.wordWrap":"on"
+  #          }
+  #dest: ~/.config/Code/User/settings.json
+
+  
 - name: configure vscode
-- copy:
-  content: |
-            {
-            "git.autofetch":true,
-            "keyboard.dispatch":"keyCode",
-            "workbench.startupEditor":"newUntitledFile",
-            "editor.wordWrap":"on"
-            }
-  dest: ~/.config/Code/User/settings.json
+  become: yes
+  template:
+    src: settings.j2
+    dest: '{{ homedir }}/.config/Code/User/settings.json'
+    force: true
+    mode: 'u=rw,go='
+    vars:
+      content: {
+        "git.autofetch":true,
+        "keyboard.dispatch":"keyCode",
+        "workbench.startupEditor":"newUntitledFile",
+        "editor.wordWrap":"on"
+        }
 
 # install and configure git-cli
 - name: install git
