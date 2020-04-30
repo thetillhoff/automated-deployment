@@ -54,7 +54,7 @@ Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value C:/
 $restartrequired = $true
 
 # disable web results in start-menu-search
-Set-WindowsSearchSetting -EnableWebResultsSetting $false
+#Set-WindowsSearchSetting -EnableWebResultsSetting $false
 
 # disable onedrive ads
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'ShowSyncProviderNotifications' -Value 0
