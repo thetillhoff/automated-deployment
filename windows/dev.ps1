@@ -41,3 +41,12 @@ choco install -y filezilla
 
 # install openssh
 choco install -y openssh
+
+# install anaconda (python interactive)
+choco install -y anaconda3
+
+# install nodejs
+choco install -y nodejs-lts
+
+# install IntelliJ IDEA Community (for java dev)
+choco install -y intellijidea
