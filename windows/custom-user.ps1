@@ -49,8 +49,8 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 #  }
 #}
 # change background image
-Copy-Item $PSScriptRoot/files/black.jpg C:/windows/black.jpg
-Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value C:/windows/black.jpg
+Copy-Item $PSScriptRoot/files/black.jpg C:/Users/$env:UserName/Pictures/black.jpg
+Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value C:/Users/$env:UserName/Pictures/black.jpg
 $restartrequired = $true
 
 # disable web results in start-menu-search

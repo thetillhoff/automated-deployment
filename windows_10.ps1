@@ -48,6 +48,7 @@ $elevated_cmds += ,"echo '*** ELEVATED LOG STARTS HERE ***'" # mark the start of
 $elevated_cmds += ,"$PSScriptRoot/windows/install-choco.ps1"
 $elevated_cmds += ,"$PSScriptRoot/windows/install-scoop.ps1"
 
+Write-Host "Prerequisites fulfilled. Starting role installation..."
 
 # roles
 $elevated_cmds += ,"$PSScriptRoot/windows/common.ps1"
