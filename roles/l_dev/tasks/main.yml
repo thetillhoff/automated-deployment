@@ -133,6 +133,7 @@
     name: "nodejs={{ nodejs_version|regex_replace('x', '') }}*"
     state: present
 
+# install helm
 - name: check if helm is installed
   become: true
   stat:
