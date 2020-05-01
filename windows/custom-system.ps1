@@ -25,6 +25,21 @@ function install-font {
 
 # install f.lux
 choco install -y f.lux
+# configure f.lux
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\offer\' -name "bigupdate" -value 4000
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\offer\' -name "readme" -value 4111
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\offer\' -name "welcome" -value 1000
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "alarm" -value 0
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "canpreventsleep" -value 0
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "data" -value 0
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "hasv4" -value 2
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "hotkeys" -value 0
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "huedawndusknames" -value "door,porch"
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "Indoor" -value 5000
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "Late" -value 3600
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "Latitude" -value 4840
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "Longitude" -value 1000
+Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences\' -name "prompt-bedtime" -value 0
 
 # install jdownloader
 choco install -y jdownloader
