@@ -33,17 +33,19 @@ do {
 # helper-functions
 function run-normal {
     Param($cmds)
-    Start-Process powershell -nonewwindow -wait -ArgumentList $cmds
+    Start-Process Powershell -wait -ArgumentList "$cmds"; # maybe add "-NoNewWindows"
 }
 function run-elevated {
     Param($cmds)
-    Start-Process powershell -wait -verb runas -ArgumentList $cmds
+    Start-Process Powershell -wait -verb runas -ArgumentList "$cmds";
 }
 
 
 # prerequisites
-$normal_cmds += ,"Start-Transcript -Append '$logfile'" # start transcript, as commands start in another window
-$elevated_cmds += ,"Start-Transcript -Append '$logfile'" # start another transcript, as elevated commands start in another window
+$normal_cmds += ,"Start-Transcript -Append `"$logfile`"" # start transcript, as commands start in another window
+$normal_cmds += ,"Set-ExecutionPolicy Bypass -Scope Process -Force"
+$elevated_cmds += ,"Start-Transcript -Append `"$logfile`"" # start another transcript, as elevated commands start in another window
+$elevated_cmds += ,"Set-ExecutionPolicy Bypass -Scope Process -Force"
 $elevated_cmds += ,"echo '*** ELEVATED LOG STARTS HERE ***'" # mark the start of elevated commands
 $elevated_cmds += ,"$PSScriptRoot/windows/install-choco.ps1"
 $elevated_cmds += ,"$PSScriptRoot/windows/install-scoop.ps1"
@@ -64,13 +66,14 @@ $normal_cmds += ,"$PSScriptRoot/windows/custom-user.ps1"
 
 # this should be near the end ot the script:
 if ($normal_cmds.count -gt 0) {
-    $normal_cmds += ,"Stop-Transcript" # not necessarily required, as the transcript stops when the window closes
-    run-normal -cmd $($normal_cmds -join "; ")
+    #$normal_cmds += ,"Stop-Transcript" # not necessarily required, as the transcript stops when the window closes
+    run-normal -cmd "$($normal_cmds -join '; ')"
 }
+Write-Output "User-scripts executed. Continuing with elevated script..."
 if ($elevated_cmds.count -gt 0) {
-    $elevated_cmds += ,"Stop-Transcript" # not necessarily required, as the transcript stops when the window closes
+    #$elevated_cmds += ,"Stop-Transcript" # not necessarily required, as the transcript stops when the window closes
     $elevated_cmds += ,"sleep 5" # so the output of the window is readable for a short time - despite the logfile
-    run-elevated -cmd $($elevated_cmds -join "; ")
+    run-elevated -cmd "$($elevated_cmds -join '; ')"
 }
 
 # start log-file

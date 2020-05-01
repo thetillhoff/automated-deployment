@@ -29,7 +29,8 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 # delete history of recently and frequently used files
 Remove-Item -recurse -force $env:APPDATA/Microsoft/Windows/Recent/*
 # restart explorer afterwards
-taskkill /IM explorer.exe /F; explorer.exe
+#taskkill /IM explorer.exe /F; explorer.exe # killing explorer while files are written (logfile) is not a good idea. Instead:
+Set-Variable -Name restartrequired -Value $true -Scope Global # setting variable globally
 
 # switch to darkmode
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'AppsUseLightTheme' -Value 0
@@ -51,10 +52,11 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 # change background image
 Copy-Item $PSScriptRoot/files/black.jpg C:/Users/$env:UserName/Pictures/black.jpg
 Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value C:/Users/$env:UserName/Pictures/black.jpg
-$restartrequired = $true
+Set-Variable -Name restartrequired -Value $true -Scope Global # setting variable globally
 
 # disable web results in start-menu-search
-#Set-WindowsSearchSetting -EnableWebResultsSetting $false
+#Import-Module -Name WindowsSearch
+#Set-WindowsSearchSetting -EnableWebResultsSetting $false # doesn't work
 
 # disable onedrive ads
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'ShowSyncProviderNotifications' -Value 0
@@ -68,3 +70,5 @@ Remove-Item $HOME\Desktop\*.lnk
 reg import ./windows/files/cleantaskbar.reg
 # add shortcuts to taskbar:
 #%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\... -> OneNote, Outlook, but not ms-task, chrome
+
+Write-Host "Finished custom-user.ps1"
