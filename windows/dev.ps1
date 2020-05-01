@@ -10,7 +10,7 @@ Foreach ($e in @("ms-azuretools.vscode-docker","ms-python.python","ms-vscode.Go"
 # install Visual Studio 2019 Community
 choco install -y visualstudio2019community
 # remove context-menu integration of visual studio community
-Remove-ItemProperty -Path 'HKCR:\Directory\shell' -Name 'AnyCode'
+Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Classes\Directory\shell' -Name 'AnyCode'
 
 # install git
 choco install -y git
@@ -19,10 +19,12 @@ choco install -y git
 choco install -y git-fork
 
 # install python with pip
-choco install -y python --params "/INSTALLDIR:C:\.Python38"
+mkdir 'C:\Program Files\Python3'
+choco install -y python --params '/INSTALLDIR:""C:\Program Files\Python3""'
 
 # install golang
-choco install -y golang --install-arguments="INSTALLDIR=C:\.Go"
+mkdir 'C:\Program Files\Go'
+choco install -y golang --install-arguments='/INSTALLDIR:""C:\Program Files\Go""'
 
 # install go-task
 scoop bucket add extras; scoop install task --global

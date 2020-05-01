@@ -19,14 +19,14 @@ choco install -y paint.net
 # install vlc media player
 choco install -y vlc
 # remove vlc context-menu integration
-Remove-ItemProperty -Path 'HKCR:\Directory\shell' -Name 'PlayWithVLC'
-Remove-ItemProperty -Path 'HKCR:\Directory\shell' -Name 'AddtoPlaylistVLC'
+Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Classes\Directory\shell' -Name 'PlayWithVLC'
+Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Classes\Directory\shell' -Name 'AddtoPlaylistVLC'
 
 # install veeam-agent
 choco install -y veeam-agent
 
 # copy netspeedmonitor-installer to desktop
-Copy-Item ./windows/files/netspeedmonitor.msi ~/Desktop/netspeedmonitor.msi
+Copy-Item $PSScriptRoot/windows/files/netspeedmonitor.msi ~/Desktop/netspeedmonitor.msi
 
 # uninstall games
 Get-AppxPackage king.com.FarmHeroesSaga* | Remove-AppxPackage

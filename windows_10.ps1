@@ -59,21 +59,21 @@ $elevated_cmds += ,"$PSScriptRoot/windows/docker.ps1"
 $elevated_cmds += ,"$PSScriptRoot/windows/hyperv.ps1"
 #./windows/office365.ps1| Tee-Object -Append -FilePath "$logfile" # install manually for x64 and other options
 $elevated_cmds += ,"$PSScriptRoot/windows/teamviewer.ps1"
-$elevated_cmds += ,"$PSScriptRoot/windows/./windows/gamelauncher.ps1"
+$elevated_cmds += ,"$PSScriptRoot/windows/gamelauncher.ps1"
 $elevated_cmds += ,"$PSScriptRoot/windows/custom-system.ps1"
 $normal_cmds += ,"$PSScriptRoot/windows/custom-user.ps1"
 
 
 # this should be near the end ot the script:
-if ($normal_cmds.count -gt 0) {
-    #$normal_cmds += ,"Stop-Transcript" # not necessarily required, as the transcript stops when the window closes
-    run-normal -cmd "$($normal_cmds -join '; ')"
-}
-Write-Output "User-scripts executed. Continuing with elevated script..."
 if ($elevated_cmds.count -gt 0) {
     #$elevated_cmds += ,"Stop-Transcript" # not necessarily required, as the transcript stops when the window closes
     $elevated_cmds += ,"sleep 5" # so the output of the window is readable for a short time - despite the logfile
     run-elevated -cmd "$($elevated_cmds -join '; ')"
+}
+Write-Output "Elevated-script(s) executed. Continuing with user-script(s)..."
+if ($normal_cmds.count -gt 0) {
+    #$normal_cmds += ,"Stop-Transcript" # not necessarily required, as the transcript stops when the window closes
+    run-normal -cmd "$($normal_cmds -join '; ')"
 }
 
 # start log-file
