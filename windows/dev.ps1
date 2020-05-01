@@ -43,7 +43,7 @@ choco install -y filezilla
 choco install -y openssh
 
 # install anaconda (python interactive)
-choco install -y anaconda3
+choco install -y anaconda3 --params '/AddToPath /InstallationPath:""C:\Program Files""'
 
 # install nodejs
 choco install -y nodejs-lts
