@@ -10,7 +10,7 @@ Foreach ($e in @("ms-azuretools.vscode-docker","ms-python.python","ms-vscode.Go"
 # install Visual Studio 2019 Community
 choco install -y visualstudio2019community
 # remove context-menu integration of visual studio community
-Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Classes\Directory\shell' -Name 'AnyCode'
+Remove-Item -Path 'HKLM:\SOFTWARE\Classes\Directory\shell\AnyCode' -Recurse
 
 # install git
 choco install -y git
@@ -52,3 +52,4 @@ choco install -y nodejs-lts
 
 # install IntelliJ IDEA Community (for java dev)
 choco install -y intellijidea
+Remove-Item -Path 'HKLM:\SOFTWARE\Classes\*\shell\Open with IntelliJ IDEA Community Edition' -Recurse # takes a lot of time, but works... probably because of the '*'
