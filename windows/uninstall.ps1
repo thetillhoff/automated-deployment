@@ -1,33 +1,3 @@
-# install 7zip
-choco install -y 7zip
-
-# install Google Chrome
-choco install -y googlechrome
-
-# install Adobe Reader DC
-choco install -y adobereader
-
-# install Java Runtime 8
-choco install -y jre8
-
-# install WinDirStat
-choco install -y windirstat
-
-# install paint.net
-choco install -y paint.net
-
-# install vlc media player
-choco install -y vlc
-# remove vlc context-menu integration
-Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Classes\Directory\shell' -Name 'PlayWithVLC'
-Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Classes\Directory\shell' -Name 'AddtoPlaylistVLC'
-
-# install veeam-agent
-choco install -y veeam-agent
-
-# copy netspeedmonitor-installer to desktop
-Copy-Item $PSScriptRoot/windows/files/netspeedmonitor.msi ~/Desktop/netspeedmonitor.msi
-
 # uninstall games
 Get-AppxPackage king.com.FarmHeroesSaga* | Remove-AppxPackage
 Get-AppxPackage xingag.xing* | Remove-AppxPackage
@@ -61,6 +31,3 @@ Get-AppxPackage Microsoft.Xbox.TCUI* | Remove-AppxPackage
 Get-AppxPackage Microsoft.XboxApp* | Remove-AppxPackage
 ## weather
 Get-AppxPackage Microsoft.BinWeather* | Remove-AppxPackage
-
-# set global execution policy for the whole machine
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine

@@ -22,9 +22,13 @@ function install-font {
     }
 }
 
+# install fonts
+install-font("Roboto")
+install-font("Open Sans")
 
-# install f.lux
-choco install -y f.lux
+# set global execution policy for the whole machine
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+
 # configure f.lux
 Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\offer' -name "bigupdate" -value 4000
 Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\offer' -name "readme" -value 4111
@@ -40,20 +44,6 @@ Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences' -name "Lat
 Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences' -name "Latitude" -value 4840
 Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences' -name "Longitude" -value 1000
 Set-ItemProperty -path 'HKCU:\SOFTWARE\Michael Herf\flux\Preferences' -name "prompt-bedtime" -value 0
-
-# install jdownloader
-choco install -y jdownloader
-
-# install whatsapp desktop
-choco install -y whatsapp
-
-# install nmap
-choco install -y nmap
-
-
-# install fonts
-install-font("Roboto")
-install-font("Open Sans")
 
 
 # As the 'Quick Access' elements is accessible in contrast to the default folders from 'This PC', the following remove/add is done:
@@ -87,4 +77,4 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Nam
 # add scripts to C:/Windows, which is included in path
 Copy-Item $PSScriptRoot/files/hide.ps1 C:/Windows/hide.ps1
 $currentlocation=Get-Location;
-Set-Location C:\;hide.ps1;Set-Location $currentlocation;
+Set-Location C:\Windows\;hide.ps1;Set-Location $currentlocation;
