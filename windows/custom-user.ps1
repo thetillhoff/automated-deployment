@@ -31,6 +31,10 @@ Remove-Item -recurse -force $env:APPDATA/Microsoft/Windows/Recent/*
 # restart explorer afterwards
 #taskkill /IM explorer.exe /F; explorer.exe # killing explorer while files are written (logfile) is not a good idea. Instead:
 Set-Variable -Name restartrequired -Value $true -Scope Global # setting variable globally
+# set explorer to always show full path in path bar
+Set-ItemProperty -Path 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState' -Name 'FullPath' -Value 1
+# expand explorer ribbon
+#Set-ItemProperty -Path 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Ribbon' -Name 'MinimizedStateTabletModeOff' -Value 0
 
 # switch to darkmode
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'AppsUseLightTheme' -Value 0
@@ -50,8 +54,7 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\P
 #  }
 #}
 # change background image
-Write-Host "Current PSScriptRoot: $PSScriptRoot"
-Copy-Item $PSScriptRoot/windows/files/black.jpg C:/Users/$env:UserName/Pictures/black.jpg
+Copy-Item $PSScriptRoot/files/black.jpg C:/Users/$env:UserName/Pictures/black.jpg
 Set-ItemProperty -path 'HKCU:\Control Panel\Desktop' -name wallpaper -value C:/Users/$env:UserName/Pictures/black.jpg
 Set-Variable -Name restartrequired -Value $true -Scope Global # setting variable globally
 
@@ -73,6 +76,6 @@ reg import ./windows/files/cleantaskbar.reg
 #%APPDATA%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\... -> OneNote, Outlook, but not ms-task, chrome
 
 # copy netspeedmonitor-installer to desktop
-Copy-Item $PSScriptRoot/windows/files/netspeedmonitor.msi ~/Desktop/netspeedmonitor.msi
+Copy-Item $PSScriptRoot/files/netspeedmonitor.msi ~/Desktop/netspeedmonitor.msi
 
 Write-Host "Finished custom-user.ps1"
