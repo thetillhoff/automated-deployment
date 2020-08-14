@@ -66,8 +66,7 @@ Set-Variable -Name restartrequired -Value $true -Scope Global # setting variable
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'ShowSyncProviderNotifications' -Value 0
 
 # remove everything from (public & user) desktop
-Remove-Item C:\Users\Public\Desktop\*.lnk
-Remove-Item $HOME\Desktop\*.lnk
+Remove-Item $HOME\Desktop\*.lnk -force
 #Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace' -Name '{645FF040-5081-101B-9F08-00AA002F954E}' #recycle bin
 
 # clear taskbar (only explorer remains)
