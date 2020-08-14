@@ -75,6 +75,7 @@ if ( -not (Test-Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer')) {
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "HideRecentlyAddedApps" -Value 0
 
 # add scripts to C:/Windows, which is included in path
+Write-Host "Current PSScriptRoot: $PSScriptRoot"
 Copy-Item $PSScriptRoot/files/hide.ps1 C:/Windows/hide.ps1
 $currentlocation=Get-Location;
-Set-Location C:\Windows\;hide.ps1;Set-Location $currentlocation;
+Set-Location C:\Windows\;./hide.ps1;Set-Location $currentlocation;
