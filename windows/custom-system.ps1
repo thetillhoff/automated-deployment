@@ -68,6 +68,9 @@ if (Test-Path 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explo
 }
 # add user folder to Quick Access in Explorer
 
+# remove "share with skype" form context menu
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Classes\PackagedCom\Package\Microsoft.SkypeApp_15.63.76.0_x86__kzf8qxf38zg5c\Class\{776DBC8D-7347-478C-8D71-791E12EF49D8}" -Name "DllPath"
+
 # disable 'recently added' on startmenu
 if ( -not (Test-Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer')) {
     New-Item 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer' # create if not exists
