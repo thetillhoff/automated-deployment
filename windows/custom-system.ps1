@@ -77,6 +77,19 @@ if ( -not (Test-Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer')) {
 }
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "HideRecentlyAddedApps" -Value 0
 
+# disable web results in start-menu-search (via firewall)
+$SearchOut = @{
+    "DisplayName" = "Disable Windows Web Search"
+    "Package"     = "S-1-15-2-536077884-713174666-1066051701-3219990555-339840825-1966734348-1611281757"
+    "Enabled"     = "True"
+    "Action"      = "Block"
+    "Direction"   = "Outbound"}
+If (-Not (Get-NetFirewallRule -DisplayName $SearchOut.DisplayName -ErrorAction SilentlyContinue) ) { New-NetFirewallRule @SearchOut } Else { Set-NetFirewallRule @SearchOut }
+
+# autoconfigure onedrive if possible
+if(!(Test-Path 'HKLM:\SOFTWARE\Policies\Microsoft\OneDrive')){New-Item -Path 'HKLM:\SOFTWARE\Policies\Microsoft\OneDrive'}
+New-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\OneDrive' -Name 'SilentAccountConfig' -Value 1
+
 # add scripts to C:/Windows, which is included in path
 Copy-Item $PSScriptRoot/files/hide.ps1 C:/Windows/hide.ps1
 $currentlocation=Get-Location;
