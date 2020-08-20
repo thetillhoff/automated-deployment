@@ -22,6 +22,13 @@ function install-font {
     }
 }
 
+# resync time
+start-service w32time
+w32tm /resync
+
+# set timezone
+Set-Timezone -Id "W. Europe Standard Time"
+
 # install fonts
 install-font("Roboto")
 install-font("Open Sans")
