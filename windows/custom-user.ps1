@@ -65,4 +65,13 @@ reg import ./windows/files/cleantaskbar.reg
 ## copy netspeedmonitor-installer to desktop
 Copy-Item $PSScriptRoot/files/netspeedmonitor.msi ~/Desktop/netspeedmonitor.msi
 
+# user-specific putty settings
+New-Item -Path HKCU:\SOFTWARE -Name SimonTatham
+New-Item -Path HKCU:\SOFTWARE\SimonTatham -Name PuTTY
+New-Item -Path HKCU:\SOFTWARE\SimonTatham\PuTTY -Name Sessions
+New-Item -Path HKCU:\SOFTWARE\SimonTatham\PuTTY\Sessions -Name alpha-centauri
+New-ItemProperty -Path HKCU:\SOFTWARE\SimonTatham\PuTTY\Sessions\alpha-centauri -name HostName -value 78.46.161.35
+New-ItemProperty -Path HKCU:\SOFTWARE\SimonTatham\PuTTY\Sessions\alpha-centauri -name UserName -value enforge
+New-ItemProperty -Path HKCU:\SOFTWARE\SimonTatham\PuTTY\Sessions\alpha-centauri -name PublicKeyFile -value C:\Users\TillHoffmann\.ssh\till.hoffmann@enforge.de.ppk
+
 Write-Host "Finished custom-user.ps1"
