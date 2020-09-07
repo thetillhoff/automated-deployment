@@ -10,6 +10,7 @@
 #      - repo: ''
 #        dest: "{{ homedir }}"
     go_version: "1.14.7"
+    go_modules: []
     gotask_version: "3.0.0"
     helm_version: "3.2.4"
     hugo_version: "0.74.3"

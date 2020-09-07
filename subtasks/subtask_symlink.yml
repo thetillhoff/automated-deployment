@@ -1,9 +1,0 @@
-- stat:
-    path: "{{ dest }}"
-  register: sym
-- block:
-    - name: remove the folder {{ dest }}
-      file: path={{ dest }} state=absent
-    - name: create symlink for folder {{ dest }}
-      file: src={{ src }} dest={{ dest }} state=link
-  when: sym.stat.islnk is defined and sym.stat.islnk == False

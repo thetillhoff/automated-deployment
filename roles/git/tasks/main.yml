@@ -1,4 +1,4 @@
-- name: Install Git
+- name: Install git and git-lfs
   become: true
   package:
     name: "{{ item }}"
