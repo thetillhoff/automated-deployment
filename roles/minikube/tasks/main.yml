@@ -5,6 +5,6 @@
 - name: Set default driver for minikube
   shell: minikube config set driver docker
 - name: Start minikube
-  shell: minikube start
+  shell: minikube start --extra-config=apiserver.service-node-port-range=1-65535
 - name: Set addons for minikube
   shell: minikube addons enable ingress
