@@ -1,0 +1,46 @@
+- name: add apt signing key
+  become: true
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+- name: add repository
+  become: true
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+- name: install kubectl
+  become: true
+  apt:
+    update_cache: yes
+    name: kubectl
+- name: ensure bashrc exists
+  file:
+    path: ~/.bashrc
+    state: touch
+    # access_time and modification_time preservation makes this 'changed' only when the file is created
+    access_time: preserve
+    modification_time: preserve
+- name: enable overall autocompletion in bash
+  lineinfile:
+    path: ~/.bashrc
+    line: source /etc/bash_completion
+    state: present
+    insertbefore: BOF
+- name: add autocompletion for kubectl in bash
+  lineinfile:
+    path: ~/.bashrc
+    line: source <(kubectl completion bash)
+    state: present
+    insertafter: EOF
+- name: add alias for kubectl in bash
+  lineinfile:
+    path: ~/.bashrc
+    line: alias k=kubectl
+    state: present
+    insertafter: EOF
+- name: enable autocompletion for kubectl alias in bash
+  lineinfile:
+    path: ~/.bashrc
+    line: source <(kubectl completion bash | sed 's/kubectl/k/g')
+    state: present
+    insertafter: EOF

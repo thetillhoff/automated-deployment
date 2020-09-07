@@ -1,0 +1,26 @@
+- name: Check if helm is installed
+  become: true
+  stat:
+    path: /usr/local/bin/helm
+  register: r_helm
+  changed_when: false
+- name: Create helm destination folder
+  become: true
+  file:
+    path: /usr/local/bin/helm-files
+    state: directory
+  when: r_helm.stat.exists == false
+- name: Download & extract helm tar.gz
+  become: true
+  unarchive:
+    src: https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz
+    dest: /usr/local/bin/helm-files
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+  when: r_helm.stat.exists == false
+- name: Create link for helm
+  become: true
+  file:
+    src: /usr/local/bin/helm-files/helm
+    dest: /usr/local/bin/helm
+    state: link

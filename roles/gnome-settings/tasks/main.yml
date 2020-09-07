@@ -1,0 +1,47 @@
+- name: get gnome theme
+  become: true
+  become_user: "{{ user }}"
+  shell: gsettings get org.gnome.desktop.interface gtk-theme
+  register: r_gnome_theme
+  changed_when: no
+- set_fact:
+    gnome_theme: "{{ r_gnome_theme.stdout }}"
+- name: set gnome theme
+  become: true
+  become_user: "{{ user }}"
+  shell: gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+  when: gnome_theme != "'Adwaita-dark'"
+- name: install dconf-editor
+  become: true
+  apt:
+    name: dconf-editor
+
+- name: get gnome animation setting
+  become: true
+  become_user: "{{ user }}"
+  shell: gsettings get org.gnome.desktop.interface enable-animations
+  register: r_gnome_animation
+  changed_when: no
+- set_fact:
+    gnome_animation: "{{ r_gnome_animation.stdout }}"
+- name: set gnome animation setting
+  become: true
+  become_user: "{{ user }}"
+  shell: gsettings set org.gnome.desktop.interface enable-animations false
+  when: gnome_animation == true
+
+- name: check favorites of gnome bar
+  become: true
+  become_user: "{{ user }}"
+  shell: dconf read /org/gnome/shell/favorite-apps
+  register: r_gnome_favorites
+  changed_when: no
+- set_fact:
+  # removing all " and ' form the strings, to be able to compare them properly
+    current_gnome_favorites: "{{ r_gnome_favorites.stdout | string | regex_replace(\"'\",'') }}"
+    wanted_gnome_favorites: "{{ gnome_favorites | to_json | string | regex_replace('\"','') }}"
+- name: set favorites of gnome bar
+  become: true
+  become_user: "{{ user }}"
+  shell: "dconf write /org/gnome/shell/favorite-apps \"{{ gnome_favorites | to_json | string | regex_replace('\"',\"'\") }}\""
+  when: current_gnome_favorites != wanted_gnome_favorites

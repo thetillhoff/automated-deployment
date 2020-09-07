@@ -1,0 +1,22 @@
+- name: Install Chromium
+  become: true
+  apt:
+    name: chromium-browser
+    state: latest
+
+# alternative installation (proprietary) google chrome:
+#- name: add apt signing key
+#  become: true
+#  apt_key:
+#    url: https://dl.google.com/linux/linux_signing_key.pub
+#    state: present
+#- name: add repository
+#  become: true
+#  apt_repository:
+#    repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+#    state: present
+#- name: update apt-cache and install google-chrome
+#  become: true
+#  apt:
+#    update_cache: yes
+#    name: google-chrome-stable

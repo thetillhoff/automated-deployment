@@ -1,0 +1,10 @@
+- name: install minikube
+  become: true
+  apt:
+    deb: https://github.com/kubernetes/minikube/releases/download/v{{ minikube_version }}/minikube_{{ minikube_version }}.deb
+- name: Set default driver for minikube
+  become: true
+  shell: minikube config set driver docker
+- name: Set addons for minikube
+  become: true
+  shell: minikube addons enable ingress

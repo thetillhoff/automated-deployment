@@ -1,0 +1,26 @@
+- name: Check if go is installed
+  stat:
+    path: /usr/local/go/bin
+  register: r_golang
+- name: Create golang destination folder
+  become: true
+  file:
+    path: /usr/local/go
+    state: directory
+  when: r_golang.stat.exists == false
+- name: Install golang
+  become: true
+  unarchive:
+    src: https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz
+    dest: /usr/local/go
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+  when: r_golang.stat.exists == false
+- include_tasks: tasks/debian_add_to_path.yml
+  vars:
+    extra_path: /usr/local/go/bin
+- name: Install golang modules
+  become: true
+  # path variable is not there yet
+  shell: /usr/local/go/bin/go get '{{ item }}'
+  with_items: "{{ go_modules }}"

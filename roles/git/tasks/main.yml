@@ -1,0 +1,30 @@
+- name: Install Git
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - git-lfs
+
+- name: Configure git global values
+  block:
+    - git_config:
+        name: user.name
+        scope: global
+        value: "{{ git_user }}"
+    - git_config:
+        name: user.email
+        scope: global
+        value: "{{ git_mail }}"
+      when: git_mail != ""
+
+#- name: Clone git repos
+#  git:
+#    repo: "{{ item.repo }}"
+#    dest: "{{ item.dest }}"
+#    version: "{{ item.version  | default('master') }}"
+#    update: no
+#    accept_hostkey: yes
+#    key_file: "{{ homedir }}/.ssh/id_rsa"
+#  with_items: "{{ git_clone }}"

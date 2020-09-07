@@ -1,0 +1,55 @@
+- name: Install basic system tools
+  become: true
+  apt:
+    update_cache: yes
+    state: present
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - gnupg2
+      - software-properties-common
+      - curl
+      - wget
+      - dnsutils # for nslookup
+      - net-tools # for netstat
+- name: Uninstall annoying 'error'-software
+  become: true
+  apt:
+    state: absent
+    name:
+      - kerneloops
+      - whoopsie
+- name: Uninstall games
+  become: true
+  apt:
+    state: absent
+    name:
+      - aisleriot
+      - five-or-more
+      - gnome-klotski
+      - gnome-mines
+      - gnome-robots
+      - gnome-taquin
+      - hitori
+      - lightsoff
+      - swell-foop
+      - four-in-a-row
+      - gnome-mahjongg
+      - gnome-nibbles
+      - gnome-sudoku
+      - gnome-tetravex
+      - iagno
+      - quadrapassel
+      - tali
+- name: Delete remaining game folders from disk
+  become: true
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - "/usr/games"
+    - "/usr/local/games"
+- name: Uninstall old dependencies
+  become: true
+  apt:
+    autoremove: yes

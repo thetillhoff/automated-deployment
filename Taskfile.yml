@@ -1,0 +1,16 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  ansible-provision:debian:
+    desc: Run full provisioning with relative path [optional param TAG]
+    # e.g. task ansible-provisioning TAG=gotask
+    cmds:
+    - ansible-playbook -v ./debian_10_server.yml {{ if .TAG }}--tags {{ .TAG }} {{ end }}--ask-become-pass
+  
+  ansible-provision:ubuntu:
+    desc: Run full provisioning with relative path [optional param TAG]
+    # e.g. task ansible-provisioning TAG=gotask
+    cmds:
+    - ansible-playbook -v ./ubuntu_1804_hyperv_quickcreate.yml {{ if .TAG }}--tags {{ .TAG }} {{ end }}--ask-become-pass

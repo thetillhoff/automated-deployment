@@ -1,0 +1,6 @@
+- name: Install git-cola
+  become: true
+  package:
+    name: git-cola
+    state: present
+# sidenote: git-cola is one of the rare guis that are capable of partial staging.

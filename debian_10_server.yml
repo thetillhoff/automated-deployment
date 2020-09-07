@@ -1,0 +1,69 @@
+- hosts: localhost
+  connection: local
+  run_once: true
+  vars:
+    user: "{{ lookup('env','USER') }}"
+    homedir: "{{ lookup('env','HOME') }}"
+    git_user: "Till Hoffmann"
+    git_mail: "till.hoffmann@enforge.de"
+#    git_clone:
+#      - repo: ''
+#        dest: "{{ homedir }}"
+    go_version: "1.14.7"
+    gotask_version: "3.0.0"
+    helm_version: "3.2.4"
+    hugo_version: "0.74.3"
+    minikube_version: "1.12.2"
+    nodejs_version: "12.18.3"
+    gnome_favorites:
+        - org.gnome.Terminal.desktop
+        - org.gnome.Nautilus.desktop
+        - chrome.desktop
+        - code.desktop
+        - git-cola.desktop
+
+# prerequisites
+#    - installed ansible
+#    - internet connection (running tproxy)
+#    - sudo installed
+#    - user dev in suders list (remove task "append 'sudo' to groups the user ...")
+#    - gnome installed
+# -> see ./prerequisites.sh
+
+  roles:
+  - role: base
+    tags: base
+#  - role: chrome # only if gui is installed
+#    tags: chrome
+  - role: docker
+    tags: docker
+  - role: git
+    tags: git
+#  - role: git-gui
+#    tags: git-gui
+#  - role: gnome-settings
+#    tags: gnome-settings
+  - role: golang
+    tags: golang
+  - role: gotask
+    tags: gotask
+  - role: helm
+    tags: helm
+#  - role: hugo
+#    tags: hugo
+#  - role: hypervisor
+#    tags: hypervisor
+  - role: kubectl
+    tags: kubectl
+  - role: minikube
+    tags: minikube
+#  - role: nodejs
+#    tags: nodejs
+  - role: python
+    tags: python
+#  - role: ssh
+#    tags: ssh
+#  - role: vm # only if this machine is a vm on hyperv
+#    tags: vm
+#  - role: vscode
+#    tags: vscode

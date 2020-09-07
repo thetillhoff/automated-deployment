@@ -1,0 +1,21 @@
+- name: list ssh keys
+  shell: ssh-add -L
+  register: r_ssh_list
+  changed_when: no
+- set_fact:
+    ssh_list: "{{ r_ssh_list.stdout }}"
+- name: start ssh-agent
+  shell: eval $(ssh-agent)
+  register: ssh_agent
+  when: ssh_list == "Could not open a connection to your authentication agent."
+- name: list ssh keys
+  shell: ssh-add -L
+  register: r_ssh_list
+  changed_when: no
+  when: ssh_agent.changed
+- set_fact:
+    ssh_list: "{{ r_ssh_list.stdout }}"
+  when: ssh_agent.changed
+- name: add ssh key to agent
+  shell: ssh-add
+  when: ssh_list == "The agent has no identities."

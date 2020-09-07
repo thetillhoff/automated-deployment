@@ -1,0 +1,6 @@
+git_config:
+  credential:
+    helper: /usr/libexec/git-core/git-credential-libsecret
+  core:
+    autocrlf: input
+    eol: lf

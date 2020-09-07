@@ -1,0 +1,4 @@
+- name: Install hugo
+  become: true
+  apt:
+    deb: https://github.com/gohugoio/hugo/releases/download/v{{ hugo_version }}/hugo_extended_{{ hugo_version }}_Linux-64bit.deb

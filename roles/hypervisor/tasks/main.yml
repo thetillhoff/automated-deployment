@@ -1,0 +1,18 @@
+#TODO: check if virtualization is enabled (in BIOS)
+- name: Install kvm
+  become: true
+  apt:
+    name:
+      - qemu-kvm
+      - libvirt-clients
+      - libvirt-daemon-system
+      - virt-manager
+- name: Add {{ user}} to group 'libvirt', 'libvirt-qemu' and 'kvm'
+  become: true
+  user:
+    name: "{{ user }}"
+    groups:
+      - libvirt
+      - libvirt-qemu
+      - kvm
+    append: yes

@@ -1,0 +1,9 @@
+- name: Install Microsoft Visual Studio Code
+  become: true
+  apt:
+    deb: https://go.microsoft.com/fwlink/?LinkID=760868 # Why, Microsoft? Why create the only download-link for a .deb file in this format?
+- name: Create Microsoft Visual Studio Code Settings dir
+  file:
+    path: "~/.config/Code/User"
+    state: directory
+    recurse: true
