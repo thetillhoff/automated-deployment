@@ -12,7 +12,7 @@
   shell: ssh-add -L
   register: r_ssh_list
   changed_when: no
-  failed_when: no
+  ignore_errors: yes
   when: ssh_agent.changed
 - set_fact:
     ssh_list: "{{ r_ssh_list.stdout }}"
