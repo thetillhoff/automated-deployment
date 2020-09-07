@@ -1,7 +1,7 @@
 - name: install minikube
   become: true
   apt:
-    deb: https://github.com/kubernetes/minikube/releases/download/v{{ minikube_version }}/minikube_{{ minikube_version }}.deb
+    deb: https://github.com/kubernetes/minikube/releases/download/v{{ minikube_version }}/minikube_{{ minikube_version }}-0_amd64.deb
 - name: Set default driver for minikube
   become: true
   shell: minikube config set driver docker
