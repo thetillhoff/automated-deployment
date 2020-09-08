@@ -4,6 +4,7 @@
   vars:
     user: "{{ lookup('env','USER') }}"
     homedir: "{{ lookup('env','HOME') }}"
+    docker-compose_version: "1.26.2"
     git_user: "Till Hoffmann"
     git_mail: "till.hoffmann@enforge.de"
 #    git_clone:
@@ -38,6 +39,8 @@
 #    tags: chrome
   - role: docker
     tags: docker
+  - role: docker-compose
+    tags: docker-compose
   - role: git
     tags: git
 #  - role: git-gui
