@@ -4,7 +4,7 @@
   vars:
     user: "{{ lookup('env','USER') }}"
     homedir: "{{ lookup('env','HOME') }}"
-    docker-compose_version: "1.26.2"
+    dockercompose_version: "1.26.2"
     git_user: "Till Hoffmann"
     git_mail: "till.hoffmann@enforge.de"
 #    git_clone:
