@@ -2,20 +2,25 @@
   connection: local
   run_once: true
   vars:
-#    somevar: example
-#    user: dev
     user: "{{ lookup('env','USER') }}"
     homedir: "{{ lookup('env','HOME') }}"
-    git_name: "Till Hoffmann"
+    dockercompose_version: "1.26.2"
+    git_user: "Till Hoffmann"
     git_mail: "till.hoffmann@enforge.de"
-    nodejs_version:   "12.x"
-    golang_version:   "1.13.1"
-    gotask_version:  "2.7.1"
-    minikube_version: "1.6.1"
+#    git_clone:
+#      - repo: ''
+#        dest: "{{ homedir }}"
+    go_version: "1.14.7"
+    go_modules: []
+    gotask_version: "3.0.0"
+    helm_version: "3.2.4"
+    hugo_version: "0.74.3"
+    minikube_version: "1.12.2"
+    nodejs_version: "12.18.3"
     gnome_favorites:
         - org.gnome.Terminal.desktop
         - org.gnome.Nautilus.desktop
-        - firefox.desktop
+        - chromium.desktop
         - code.desktop
         - git-cola.desktop
 
@@ -28,9 +33,41 @@
 # -> see ./prerequisites.sh
 
   roles:
-    - l_common
-    - l_dev
-    - l_docker
-    - l_minikube
-    - l_vm
-    - l_custom
+  - role: base
+    tags: base
+  - role: chrome # only if gui is installed
+    tags: chrome
+  - role: docker
+    tags: docker
+  - role: docker-compose
+    tags: docker-compose
+  - role: git
+    tags: git
+  - role: git-gui
+    tags: git-gui
+  - role: gnome-settings
+    tags: gnome-settings
+  - role: golang
+    tags: golang
+  - role: gotask
+    tags: gotask
+  - role: helm
+    tags: helm
+  - role: hugo
+    tags: hugo
+#  - role: hypervisor
+#    tags: hypervisor
+  - role: kubectl
+    tags: kubectl
+#  - role: minikube
+#    tags: minikube
+#  - role: nodejs
+#    tags: nodejs
+  - role: python
+    tags: python
+#  - role: ssh
+#    tags: ssh
+  - role: vm # only if this machine is a vm on hyperv
+    tags: vm
+  - role: vscode
+    tags: vscode
